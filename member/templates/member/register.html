@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aroma Shop - Login</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'img/Fevicon.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/themify-icons/themify-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/linericon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/nice-select/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/nouislider/nouislider.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        #check_id {
+            margin-top: 5px;
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47;
+        } /* Gray */
+    </style>
+</head>
+
+<body>
+	<!--================ Start Header Menu Area =================-->
+	<header class="header_area">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light">
+				<div class="container">
+					<a class="navbar-brand logo_h" href="{% static 'index.html' %}"><img
+							src="{% static 'img/logo.png' %}" alt=""></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+							<li class="nav-item"><a class="nav-link" href="{% static 'index.html' %}">Home</a></li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Shop</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% static 'category.html' %}">Shop
+											Category</a></li>
+									<li class="nav-item"><a class="nav-link"
+											href="{% static 'single-product.html' %}">Blog Details</a></li>
+									{% comment %} <li class="nav-item"><a class="nav-link"
+											href="{% static 'checkout.html' %}">Product Checkout</a></li>
+									<li class="nav-item"><a class="nav-link"
+											href="{% static 'confirmation.html' %}">Confirmation</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% static 'cart.html' %}">Shopping
+											Cart</a></li> {% endcomment %}
+								</ul>
+							</li>
+							{% comment %} <li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Blog</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% static 'blog.html' %}">Blog</a>
+									</li>
+									<li class="nav-item"><a class="nav-link" href="{% static 'single-blog.html' %}">Blog
+											Details</a></li>
+								</ul>
+							</li> {% endcomment %}
+							<li class="nav-item active submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Pages</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% static 'login.html' %}">Login</a>
+									</li>
+									<li class="nav-item"><a class="nav-link"
+											href="{% url  'member:register' %}">Register</a></li>
+									{% comment %} <li class="nav-item"><a class="nav-link"
+											href="{% static 'tracking-order.html' %}">Tracking</a></li> {% endcomment %}
+								</ul>
+							</li>
+							{% comment %} <li class="nav-item"><a class="nav-link"
+									href="{% static 'contact.html' %}">Contact</a></li> {% endcomment %}
+						</ul>
+
+						<ul class="nav-shop">
+							<li class="nav-item"><button><i class="ti-search"></i></button></li>
+							</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</header>
+	<!--================ End Header Menu Area =================-->
+
+	<!-- ================ start banner area ================= -->
+	<section class="blog-banner-area" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>Login</h1>
+					<nav aria-label="breadcrumb" class="banner-breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item active" aria-current="page">Login</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ================ end banner area ================= -->
+
+    <!--================Login Box Area =================-->
+    <section class="login_box_area section-margin">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="login_form_inner register_form_inner">
+                        <h3>Create an account</h3>
+                        <form class="row login_form" method = 'post' action="{% url 'member:register' %}" id="register_form">
+                            {% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="username"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="user_id"
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'UserID'">
+                                    <button id = 'check_id' >duplicate check</button>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="email" class="form-control" id="user_email" name="user_email"
+                                    placeholder="Email Address" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Email Address'">
+                                <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="pw" name="pw"
+                                    placeholder="Password" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Password'">
+                                <div class="valid_pw" id="valid_pw"></div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="double_pw" name="double_pw"
+                                    placeholder="Confirm Password" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Confirm Password'">
+                                    <div class="check_pw" id="pw_check"></div>
+                            </div>
+                            {% comment %} <div class="col-md-12 form-group">
+                                <div class="creat_account">
+                                    <input type="checkbox" id="f-option2" name="selector">
+                                    <label for="f-option2">Keep me logged in</label>
+                                </div>
+                            </div> {% endcomment %}
+                            <div class="col-md-12 form-group">
+                                <button type="submit" value="submit"
+                                    class="button button-register w-100" id = 'reg_submit'>Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Login Box Area =================-->
+
+
+    <!--================Start Register Script Area =================-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // 아이디 중복 체크
+        document.querySelector("#check_id").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let user_id = document.querySelector("[name=user_id]").value;
+            
+            if (user_id == '') {
+                alert("사용 불가능한 ID입니다!");
+            }
+            else{
+                const data = axios({
+                        url: '/member/register/',
+                        method: 'get',
+                        params: {
+                            'user_id':user_id
+                        }
+                    });
+
+                data.then(function (result) {
+                    if (result.data == '존재') {
+                        alert("사용 불가능한 ID입니다!");
+                    }
+                    else{
+                        alert("사용 가능한 ID입니다!");
+                    }
+                });
+            }
+        });
+
+
+        // 이메일 유효성
+        document.querySelector("[name=user_email]").addEventListener("keydown", (e) => {
+    
+            let user_email = document.querySelector("[name=user_email]").value;
+            
+            const regEmail = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+            if(regEmail.test(user_email)) {
+                document.querySelector("#email_check").textContent = "";
+            }
+            else{
+                document.querySelector("#email_check").textContent = "* 이메일 형식에 맞게 작성해주세요.";
+                document.querySelector("#email_check").style.color = 'red';
+                document.querySelector("#email_check").style.fontSize = '2px';
+            }
+        });
+
+
+        // 패스워드 유효성
+        document.querySelector("[name=pw]").addEventListener("keydown", (e) => {
+            let corr_pw = /[a-zA-Z0-9]/;
+            let pw = document.querySelector("[name=pw]").value;
+            document.querySelector("#valid_pw").textContent = "";
+
+            if (pw.length == 0){
+                document.querySelector("#valid_pw").textContent = "";
+            }
+            else if(pw.length < 7 | pw.includes(" ") | !corr_pw.test(pw) ) { // 스페이스바 누르고 다른 키를 하나 더 눌러야 인식됨
+                document.querySelector("#valid_pw").textContent = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
+                document.querySelector("#valid_pw").style.color = 'red';
+                document.querySelector("#valid_pw").style.fontSize = '2px';
+            }
+            else{
+                document.querySelector("#valid_pw").textContent = "";
+            }
+        });
+
+
+        // 패스워드2 일치 여부
+        document.querySelector("[name=double_pw]").addEventListener("keydown", (e) => {
+            
+            let user_pw1 = document.querySelector("[name=pw]").value;
+            let user_pw2 = document.querySelector("[name=double_pw]").value;
+            
+            // 다른 키를 하나 더 눌러야 인식됨
+            if(user_pw1 == user_pw2) {
+                document.querySelector("#pw_check").textContent = "";
+            }
+            else{
+                document.querySelector("#pw_check").textContent = "* 비밀번호가 일치하지 않습니다.";
+                document.querySelector("#pw_check").style.color = 'red';
+                document.querySelector("#pw_check").style.fontSize = '2px';
+            }
+        });
+
+        // 모든 필드 입력 확인
+        document.querySelector("#reg_submit").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let username = document.querySelector("[name=username]").value;
+            let user_id = document.querySelector("[name=user_id]").value;
+            let user_email = document.querySelector("[name=user_email]").value;
+            let user_pw1 = document.querySelector("[name=pw]").value;
+            let user_pw2 = document.querySelector("[name=double_pw]").value;
+            
+            if (username == "" | user_id == "" | user_email == ""
+                | user_pw1 == "" | user_pw2 == ""){
+                    alert("모두 입력해주세요!");
+            }
+            else{
+                document.querySelector("#register_form").submit();
+            }
+
+
+        });
+
+    </script>
+    <!--================End Register Script Area =================-->
+
+
+    <!--================ Start footer Area  =================-->
+    <footer>
+        <div class="footer-area footer-only">
+            <div class="container">
+                <div class="row section_gap">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget tp_widgets ">
+                            <h4 class="footer_title large_title">Our Mission</h4>
+                            <p>
+                                So seed seed green that winged cattle in. Gathering thing made fly you're no
+                                divided deep moved us lan Gathering thing us land years living.
+                            </p>
+                            <p>
+                                So seed seed green that winged cattle in. Gathering thing made fly you're no divided
+                                deep moved
+                            </p>
+                        </div>
+                    </div>
+                    <div class="offset-lg-1 col-lg-2 col-md-6 col-sm-6">
+                        <div class="single-footer-widget tp_widgets">
+                            <h4 class="footer_title">Quick Links</h4>
+                            <ul class="list">
+                                <li><a href="#">Home</a></li>
+                                <li><a href="#">Shop</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Product</a></li>
+                                <li><a href="#">Brand</a></li>
+                                <li><a href="#">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-6">
+                        <div class="single-footer-widget instafeed">
+                            <h4 class="footer_title">Gallery</h4>
+                            <ul class="list instafeed d-flex flex-wrap">
+								<li><img src="{% static 'img/gallery/r1.jpg' %}" alt=""></li>
+								<li><img src="{% static 'img/gallery/r2.jpg' %}" alt=""></li>
+								<li><img src="{% static 'img/gallery/r3.jpg' %}" alt=""></li>
+								<li><img src="{% static 'img/gallery/r5.jpg' %}" alt=""></li>
+								<li><img src="{% static 'img/gallery/r7.jpg' %}" alt=""></li>
+								<li><img src="{% static 'img/gallery/r8.jpg' %}" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="offset-lg-1 col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget tp_widgets">
+                            <h4 class="footer_title">Contact Us</h4>
+                            <div class="ml-40">
+                                <p class="sm-head">
+                                    <span class="fa fa-location-arrow"></span>
+                                    Head Office
+                                </p>
+                                <p>123, Main Street, Your City</p>
+
+                                <p class="sm-head">
+                                    <span class="fa fa-phone"></span>
+                                    Phone Number
+                                </p>
+                                <p>
+                                    +123 456 7890 <br>
+                                    +123 456 7890
+                                </p>
+
+                                <p class="sm-head">
+                                    <span class="fa fa-envelope"></span>
+                                    Email
+                                </p>
+                                <p>
+                                    free@infoexample.com <br>
+                                    www.infoexample.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row d-flex">
+                    <p class="col-lg-12 footer-text text-center">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template
+                        is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                            target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+
+	<script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
+	<script src="{% static 'vendors/skrollr.min.js' %}"></script>
+	<script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+	<script src="{% static 'vendors/nice-select/jquery.nice-select.min.js' %}"></script>
+	<script src="{% static 'vendors/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static 'vendors/mail-script.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
