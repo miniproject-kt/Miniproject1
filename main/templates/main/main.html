@@ -1,0 +1,86 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+<main class="site-main">
+   <!-- ================ 빌리기 section start ================= -->
+   <section class="section-margin calc-60px">
+      <div class="container">
+         <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">빌리기</span></h2>
+         </div>
+         <div class="row">
+            {% if lender %}
+            {% for post in lender %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+               <div class="card text-center card-product">
+                  <div class="card-product__img">
+                     <a href="/board/{{post.l_posting_index}}/">
+                     {% if post.pic %}
+                        <img class="card-img" src="{{post.pic}}" alt="">
+                     {% else %}
+                        <img class="card-img" src="/static/img/object/0.jpg" alt="">
+                     {% endif %}
+                     </a>
+                     <!-- 추가할 수도 있음
+             <ul class="card-product__imgOverlay">
+               <li><button><i class="ti-search"></i></button></li>
+               <li><button><i class="ti-shopping-cart"></i></button></li>
+               <li><button><i class="ti-heart"></i></button></li>
+             </ul>
+             -->
+                  </div>
+                  <div class="card-body">
+                     <h4 class="card-product__title"><a href="/board/{{post.l_posting_index}}/">{{ post.title }}</a>
+                     </h4>
+                     <p class="card-product__price">{{ post.rentalfee|intcomma }}원</p>
+                     <p>{{ post.user_index }}</p>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <a class="card-blog__link" href="/board">더보기 <i class="ti-arrow-right"></i></a>
+         </div>
+      </div>
+   </section>
+   <!-- ================ 빌리기 section end ================= -->
+
+   <!-- ================ 요청하기 section start ================= -->
+   <section class="section-margin calc-60px">
+      <div class="container">
+         <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">요청하기</span></h2>
+         </div>
+         <div class="row">
+            {% if borrower %}
+            {% for post in borrower %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+               <div class="card text-center card-product">
+                  <div class="card-product__img">
+                     <a href="/board/{{post.b_posting_index}}/"><img class="card-img" src="/static/img/object/0.jpg" alt=""></a>
+                     <!-- 추가할 수도 있음
+             <ul class="card-product__imgOverlay">
+               <li><button><i class="ti-search"></i></button></li>
+               <li><button><i class="ti-shopping-cart"></i></button></li>
+               <li><button><i class="ti-heart"></i></button></li>
+             </ul>
+             -->
+                  </div>
+                  <div class="card-body">
+                     <h4 class="card-product__title"><a href="/board/{{post.b_posting_index}}/">{{ post.title }}</a>
+                     </h4>
+                     <p class="card-product__price">{{ post.rentalfee|intcomma }}원</p>
+                     <p>{{ post.user_index }}</p>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <a class="card-blog__link" href="/board">더보기 <i class="ti-arrow-right"></i></a>
+         </div>
+      </div>
+   </section>
+   <!-- ================ 요청하기 section end ================= -->
+
+</main>
+{% endblock %}
