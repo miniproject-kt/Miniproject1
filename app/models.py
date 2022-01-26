@@ -9,7 +9,7 @@ class User(models.Model):
     pw = models.CharField(max_length = 20, null=False) # 사용자 PW
     addr = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=50, null=False)
-    register_date = models.DateTimeField() # 등록 날짜
+    register_date = models.DateTimeField(auto_now_add=True) # 등록 날짜
     class Meta:
         db_table = 'User'
 
