@@ -20,16 +20,35 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <style>
         #check_id {
-            margin-top: 5px;
             background-color: #b74b47; color: white;
             border-radius: 4px;
             transition-duration: 0.4s;
             border: 2px solid #b74b47;
         } /* Gray */
-
+        #post_btn{
+            margin-top: 5px;
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47; 
+        }
         #reg_title{
             margin-bottom: 30px;
         }
+
+        .input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+
     </style>
 </head>
 
@@ -108,7 +127,7 @@
 		<div class="container h-100">
 			<div class="blog-banner">
 				<div class="text-center">
-					<h1>회원 가입</h1>
+					<h1>Register</h1>
 					{% comment %} <nav aria-label="breadcrumb" class="banner-breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -122,17 +141,96 @@
 	<!-- ================ end banner area ================= -->
 
     <!--================Login Box Area =================-->
-    <section class="login_box_area section-margin">
+    <section class="login_box_area" style = "margin-bottom: 120px">
         {% comment %} <div class="container">
             <div class="row">
                 <div class="col-lg-6"> {% endcomment %}
-                    <div class="login_form_inner register_form_inner">
+                    <div class="container"> 
+                        <div class="input-form-backgroud row"> 
+                            <div class="input-form col-md-12 mx-auto"> 
+                                <h2 id='reg_title'>회원 가입</h2>
+                                <form class="validation-form" method = 'post' action="{% url 'member:register' %}" id="register_form">
+                                    {% csrf_token %}
+                                    <div class="mb-3"> 
+                                        <label for="user_id">아이디</label> <span style="color: red">*</span><br>
+                                        <input type="text" class = "id_and_btn" id="user_id" name="user_id" 
+                                            style = "" placeholder="아이디를 입력해주세요."
+                                            onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'"> 
+                                    
+                                        <button id = 'check_id' >중복 확인</button>
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="pw">비밀번호</label> <span style="color: red">*</span>
+                                        <input type="password" class="form-control" d="pw" name="pw"
+                                        placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '비밀번호를 입력해주세요.'"> 
+                                        <div id = "valid_pw"></div>
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="double_pw">비밀번호 확인</label> <span style="color: red">*</span>
+                                        <input type="password" class="form-control" id="double_pw" name="double_pw"
+                                        placeholder="비밀번호를 한번 더 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'"> 
+                                        <div id = "pw_check"></div>
+                                        
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="username">이름</label> <span style="color: red">*</span>
+                                        <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력해주세요."
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="email">이메일</label> <span style="color: red">*</span>
+                                        <input type="email" class="form-control" id="user_email" name="user_email"
+                                        placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '이메일을 입력해주세요.'">
+                                        <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
+                                    </div> 
+                                    {% comment %} <div class = 'mb-3'>
+                                        <label for="postid">우편번호</label> <span style="color: red">*</span>
+                                        <input type="text" id="sample6_postcode" placeholder="">
+                                        <button onclick="sample6_execDaumPostcode()" id = 'post_btn'>우편번호 찾기</button><br>
+                                    </div> {% endcomment %}
+                                    <div class = 'mb-3'>
+                                        <label for="postid">우편번호</label> <span style="color: red">*</span><br>
+                                        <input type="text" id="postid" name="postid" placeholder="">
+                                        <button id = 'post_btn'>우편번호 찾기</button><br>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="addr">주소</label> <span style="color: red">*</span>
+                                        <input type="text" class="form-control" id="addr" name="addr" placeholder=""><br>
+
+                                        <label for="detail_addr">상세주소</label> <span style="color: red">*</span>
+                                        <input type="text" class="form-control" id="detail_addr" name = "detail_addr" placeholder="">
+                                        <div class="check_detail_addr" id="check_detail_addr"> </div> <!-- check_detail_addr이 입력됐는지 체크-->
+                                    </div>
+                                    <div class="mb-4">
+
+                                    </div> 
+                                    <div class="col-md-12 form-group">
+                                        <button type="submit" value="submit"
+                                            class="button button-register w-100" id = 'reg_submit'>가입</button>
+                                    </div> 
+                                </form> 
+                            </div> 
+                        </div> 
+                        <footer class="my-3 text-center text-small"> <p class="mb-1">&copy; 2022 AI 1-3</p> 
+                        </footer> 
+                    </div>
+
+                    {% comment %} <div class="login_form_inner register_form_inner">
                         <h2 id='reg_title'>회원 가입</h2>
-                        <form class="row login_form" method = 'post' action="{% url 'member:register' %}" id="register_form">
+                        <form class="row input-form" method = 'post' action="{% url 'member:register' %}" id="register_form">
                             {% csrf_token %}
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력해주세요."
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" id="sample6_postcode" placeholder="우편번호">
+                                <button onclick="sample6_execDaumPostcode()" id = 'post_btn'>우편번호 찾기</button><br>
+                                <input type="text" class="form-control" id="sample6_address" placeholder="주소"><br>
+                                <input type="text" class="form-control" id="sample6_detailAddress" placeholder="상세주소">
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."
@@ -157,18 +255,12 @@
                                     onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'">
                                     <div class="check_pw" id="pw_check"></div>
                             </div>
-                            {% comment %} <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <input type="checkbox" id="f-option2" name="selector">
-                                    <label for="f-option2">Keep me logged in</label>
-                                </div>
-                            </div> {% endcomment %}
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit"
                                     class="button button-register w-100" id = 'reg_submit'>가입</button>
                             </div>
                         </form>
-                    </div>
+                    </div> {% endcomment %}
                 {% comment %} </div>
             </div>
         </div> {% endcomment %}
@@ -202,26 +294,9 @@
             let user_id = document.querySelector("[name=user_id]").value;
             
             if (user_id == '') {
-                alert("사용 불가능한 ID입니다!");
+                alert("ID를 입력해주세요.");
             }
             else{
-                // const data = axios({
-                //         url: '/member/register/',
-                //         method: 'get',
-                //         params: {
-                //             'user_id':user_id
-                //         }
-                //     });
-
-                // data.then(function (result) {
-                //     if (result.data == '존재') {
-                //         alert("사용 불가능한 ID입니다!");
-                //     }
-                //     else{
-                //         alert("사용 가능한 ID입니다!");
-                //     }
-                // });
-
                 const csrftoken = getCookie('csrftoken');
                 const data = { 'user_id': user_id};
                 const ajax = axios({
@@ -246,17 +321,19 @@
 
 
         // 이메일 유효성
-        document.querySelector("[name=user_email]").addEventListener("keydown", (e) => {
+        document.querySelector("[name=user_email]").addEventListener("keyup", (e) => {
     
             let user_email = document.querySelector("[name=user_email]").value;
             
             const regEmail = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-
-            if(regEmail.test(user_email)) {
-                document.querySelector("#email_check").textContent = "";
+            if (user_email == ""){
+                document.querySelector("#email_check").innerHTML = "";
+            }
+            else if(regEmail.test(user_email)) {
+                document.querySelector("#email_check").innerHTML = "";
             }
             else{
-                document.querySelector("#email_check").textContent = "* 이메일 형식에 맞게 작성해주세요.";
+                document.querySelector("#email_check").innerHTML = "* 이메일 형식에 맞게 작성해주세요.";
                 document.querySelector("#email_check").style.color = 'red';
                 document.querySelector("#email_check").style.fontSize = '2px';
             }
@@ -267,18 +344,18 @@
         document.querySelector("[name=pw]").addEventListener("keyup", (e) => {
             let corr_pw = /[a-zA-Z0-9]/;
             let pw = document.querySelector("[name=pw]").value;
-            document.querySelector("#valid_pw").textContent = "";
+            document.querySelector("#valid_pw").innerHTML = "";
 
             if (pw.length == 0){
-                document.querySelector("#valid_pw").textContent = "";
+                document.querySelector("#valid_pw").innerHTML = "";
             }
             else if(pw.length < 8 | pw.includes(" ") | !corr_pw.test(pw) ) {
-                document.querySelector("#valid_pw").textContent = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
+                document.querySelector("#valid_pw").innerHTML = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
                 document.querySelector("#valid_pw").style.color = 'red';
                 document.querySelector("#valid_pw").style.fontSize = '2px';
             }
             else{
-                document.querySelector("#valid_pw").textContent = "";
+                document.querySelector("#valid_pw").innerHTML = "";
             }
         });
 
@@ -291,10 +368,10 @@
             
             // 다른 키를 하나 더 눌러야 인식됨
             if(user_pw1 == user_pw2) {
-                document.querySelector("#pw_check").textContent = "";
+                document.querySelector("#pw_check").innerHTML = "";
             }
             else{
-                document.querySelector("#pw_check").textContent = "* 비밀번호가 일치하지 않습니다.";
+                document.querySelector("#pw_check").innerHTML = "* 비밀번호가 일치하지 않습니다.";
                 document.querySelector("#pw_check").style.color = 'red';
                 document.querySelector("#pw_check").style.fontSize = '2px';
             }
@@ -310,8 +387,12 @@
             let user_pw1 = document.querySelector("[name=pw]").value;
             let user_pw2 = document.querySelector("[name=double_pw]").value;
             
+            //let postid = document.querySelector("[name=postid]").value;
+            //let addr = document.querySelector("[name=addr]").value;
+            //let detail_addr = document.querySelector("[name=detail_addr]").value;
+
             if (username == "" | user_id == "" | user_email == ""
-                | user_pw1 == "" | user_pw2 == ""){
+                | user_pw1 == "" | user_pw2 == "" ){//| postid == "" | detail_addr == ""){
                     alert("모두 입력해주세요!");
             }
             else{
@@ -322,6 +403,37 @@
         });
 
     </script>
+
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        document.querySelector("#post_btn").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let user_id = document.querySelector("[name=user_id]").value;
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                    var addr = ''; // 주소 변수
+
+                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                        addr = data.roadAddress;
+                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                        addr = data.jibunAddress;
+                    }
+
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('postid').value = data.zonecode;
+                    document.getElementById("addr").value = addr;
+
+                    // 커서를 상세주소 필드로 이동한다.
+                    document.getElementById("detail_addr").focus();
+                }
+            }).open(); 
+        });
+    </script>
+
     <!--================End Register Script Area =================-->
 
 

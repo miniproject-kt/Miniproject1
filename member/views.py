@@ -21,9 +21,12 @@ def register(request):
         username = request.POST.get('username')
         user_email = request.POST.get('user_email')
 
-        if (user_id=="") or (pw=="") or (confirm_pw=="") or (username=="") or (user_email==""):
-            return 
+        # postid = request.POST.get('postid')
+        # addr = request.POST.get('addr')
+        # detail_addr = request.POST.get('detail_addr')
 
+        # if (user_id=="") or (pw=="") or (confirm_pw=="") or (username=="") or (user_email==""):
+        #     return 
 
         # 입력 이메일 형식이 잘못되었거나 이미 존재하는 메일인 경우,
         if UserTable.objects.filter(user_email = user_email).exists():
@@ -31,7 +34,8 @@ def register(request):
 
         # 1차 패스워드와 2차 패스워드가 동일하면 DB 저장
         if pw == confirm_pw:
-            m = UserTable(user_id=user_id, pw=PasswordHasher().hash(pw), username=username, user_email = user_email)
+            m = UserTable(user_id=user_id, pw=PasswordHasher().hash(pw), 
+                            username=username, user_email = user_email,  )# postid = postid, addr = addr, detail_addr = detail_addr)
             m.register_date = timezone.now()
             m.save()
 

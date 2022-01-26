@@ -18,6 +18,20 @@
 	<link rel="stylesheet" href="{% static 'vendors/nouislider/nouislider.min.css' %}">
 
 	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	<style>
+		.input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+	</style>
 </head>
 
 <body>
@@ -112,22 +126,12 @@
 	<!-- ================ end banner area ================= -->
 
 	<!--================Login Box Area =================-->
-	<section class="login_box_area section-margin">
+	<section class="login_box_area" style = "margin-bottom: 120px">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-6">
-					{% comment %} <div class="login_box_img">
-						<div class="hover">
-							<h4>New to our website?</h4>
-							<p>There are advances being made in science and technology everyday, and a good example of
-								this is the</p>
-							<a class="button button-account" href="{% static 'register.html' %}">Create an Account</a>
-						</div>
-					</div> {% endcomment %}
-				</div>
-				<div class="col-lg-6">
+			<div class="input-form-backgroud row">
+				<div class="input-form col-md-12 mx-auto">
 					<div class="login_form_inner">
-						<h3>Log in to enter</h3>
+						<h2 style = "margin-bottom:20px">로그인</h2>
 						<form method='post' action="{% url 'member:login' %}">
 							{% csrf_token %}
 							<div class="col-md-12 form-group">
@@ -146,9 +150,10 @@
 								</div>
 							</div> {% endcomment %}
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="button button-login w-100" id='login_submit'>Log In</button>
-								<a href="{% url  'member:find' %}">아이디 찾기</a>
-								<a href="{% url  'member:reset' %}">비밀번호 재설정</a>
+								<button type="submit" value="submit" class="button button-login w-100" 
+									style = "margin-bottom:20px" id='login_submit'>Log In</button>
+								<a href="{% url  'member:find' %}">아이디 찾기</a><span> | </span>
+								<a href="{% url  'member:reset' %}">비밀번호 재설정</a><span> | </span>
 								<a href="{% url  'member:register' %}">회원가입</a>
 							</div>
 						</form>
@@ -220,6 +225,7 @@
 				console.log(result.data)
 				if (result.data == 'Error1' | result.data == 'Error2') {
 					alert("아이디 또는 패스워드가 틀렸습니다.");
+					document.querySelector("#pw").value = "";
 				}
 				else{
 					document.querySelector("form").submit();
