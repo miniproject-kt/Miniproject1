@@ -7,6 +7,8 @@ from .models import Lender
 from .models import Borrower
 from .models import Object
 from .models import User
+from django.utils import timezone
+import datetime
 
 def index(request):
     
@@ -14,12 +16,53 @@ def index(request):
 
 
 def insert(request):
-    user1 = User(user_index=1, username='Maria Anders', user_id = 'iamsd',  email = 'afawefwe@gmail.com', addr="경기도 성남시 분당구 불정로 90", pw='12345')
-    user2 = User(user_index=2, username='Francisco Chang', user_id = 'soqp', email ='asdasds@gmail.com', addr="경기도 성남시 분당구 이매1동" , pw='235234')
-    user3 = User(user_index=3, username='A', user_id = 'dbx', email ='afefewe@gmail.com', addr = "경기도 성남시 분당구 야탑로 59", pw='235234')
-    user4 = User(user_index=4, username='B', user_id = 'asdf', email ='ewfefwe@gmail.com',addr ="경기도 성남시 분당구 야탑로161번길 15", pw='123123')
-    user5 = User(user_index=5, username='C', user_id = 'oksdf',email ='ap@gmail.com',addr ="경기도 성남시 분당구 야탑3동 283-7", pw='awgweo')
-    user6 = User(user_index=6, username='D', user_id = 'wemfo', email ='afase@gmail.com', addr ="경기도 성남시 분당구 야탑3동 장미로 153" , pw='qweqw3')
+    user1 = User(
+            user_index=1, 
+            username='Maria Anders', 
+            user_id = 'iamsd',  
+            email = 'afawefwe@gmail.com', 
+            addr="경기도 성남시 분당구 불정로 90", 
+            pw='12345',
+            register_date=datetime.datetime(2015, 10, 8, 23, 55, 59, 342380)
+            )
+    user2 = User(
+            user_index=2, 
+            username='Francisco Chang', 
+            user_id = 'soqp', 
+            email ='asdasds@gmail.com', 
+            addr="경기도 성남시 분당구 이매1동" , 
+            pw='235234',register_date=datetime.datetime(2015, 10, 10, 23, 55, 59, 342380))
+    user3 = User(
+            user_index=3,
+            username='A',
+            user_id = 'dbx', 
+            email ='afefewe@gmail.com', 
+            addr = "경기도 성남시 분당구 야탑로 59", 
+            pw='235234',register_date=datetime.datetime(2015, 10, 11, 23, 55, 59, 342380))
+    user4 = User(
+            user_index=4, 
+            username='B', 
+            user_id = 'asdf', 
+            email ='ewfefwe@gmail.com',
+            addr ="경기도 성남시 분당구 야탑로161번길 15", 
+            pw='123123',
+            register_date=datetime.datetime(2015, 10, 12, 23, 55, 59, 342380))
+    user5 = User(
+            user_index=5, 
+            username='C', 
+            user_id = 'oksdf',
+            email ='ap@gmail.com',
+            addr ="경기도 성남시 분당구 야탑3동 283-7", 
+            pw='awgweo',
+            register_date = datetime.datetime(2015, 10, 13, 22, 55, 59, 342380))
+    user6 = User(
+            user_index=6, 
+            username='D', 
+            user_id = 'wemfo', 
+            email ='afase@gmail.com', 
+            addr ="경기도 성남시 분당구 야탑3동 장미로 153" , 
+            pw='qweqw3',
+            register_date=datetime.datetime(2015, 10, 14, 22, 55, 59, 342380))
     user1.save()
     user2.save()
     user3.save()
