@@ -133,8 +133,7 @@
           <section class="lattest-product-area pb-40 category-list">
             <div class="row">
               {% comment %} 게시판 시작 {% endcomment %}
-
-              {% for post in post_list %}
+              {% for post in info %}
               <div class="col-md-6 col-lg-4">
                 <div class="card text-center card-product">
                   <div class="card-product__img" >
@@ -150,6 +149,17 @@
                 </div>
               </div>
               {% endfor %}
+
+              <div style = 'text-align:center;'>
+                <ul>
+                  {%for i in page_range%}
+                    <li>
+                      <a href = "?page={{i}}">
+                        {{i}} </a>
+                      </li>
+                    {%endfor%}
+                    </ul>
+                </div>
 
 
             </div>

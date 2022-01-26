@@ -5,14 +5,28 @@ from .models import Posting
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator
 # Create your views here.
 
 def main(request):
     return render(request, 'postapp/blog.html')
 
 def category(request):
-    post_list = Posting.objects.all()
-    return render(request, 'postapp/category.html', {'post_list' : post_list})
+    now_page = request.GET.get('page', 1)
+    post_list = Posting.objects.order_by('-l_posting_index')
+    p = Paginator(post_list, 10)
+    info = p.get_page(now_page)
+
+    start_page = (now_page - 1) // 10 * 10 + 1
+    end_page = start_page + 9
+    if end_page > p.num_pages:
+        end_page = p.num_pages
+
+    context = {
+        'info' : info,
+        'page_range' : range(start_page, end_page+1)
+    }
+    return render(request, 'postapp/category.html', context)
 
 
 
@@ -35,7 +49,7 @@ def form_post(request):
 
 
 def detail(request, pk):
-    result = get_object_or_404(Posting, l_posting_index = pk)
+    result = get_object_or_404(Posting, board_id = pk)
     context = {'result' : result}
     return render(request, 'postapp/post_detail.html', context)
 
