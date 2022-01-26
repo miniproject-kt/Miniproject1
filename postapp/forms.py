@@ -2,7 +2,7 @@ from msilib.schema import RadioButton
 from tkinter import Radiobutton
 from django import forms
 from django.forms import TextInput, Textarea
-from . models import Posting
+from . models import Lender
 
 OPTION = (
     ('가전제품', '가전제품'),
@@ -12,7 +12,7 @@ OPTION = (
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Posting
+        model = Lender
         fields = ['board_title', 'category_opt', 'imgfile', 'board_content']
     board_title = forms.CharField(label='Title')
     category_opt = forms.ChoiceField(widget = forms.RadioSelect(), choices=OPTION, required=False)
