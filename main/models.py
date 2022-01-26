@@ -14,12 +14,11 @@ class User(models.Model):
 
 class Borrower(models.Model):
    b_posting_index = models.IntegerField(primary_key=True)
-   borrower_index = models.IntegerField()
    title = models.CharField(max_length=255, null=True)
-   #user = models.ForeignKey(User, on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
 
    class Meta:
-      db_table = 'Borrower'
+      db_table = 'Borrower_Post'
       app_label = 'main'
       managed = False
 
@@ -28,14 +27,13 @@ class Borrower(models.Model):
 
 class Lender(models.Model):
    l_posting_index = models.IntegerField(primary_key=True)
-   lender_index = models.IntegerField()
    title = models.CharField(max_length=255, null=True)
-   rentalfee = models.IntegerField()
+   deposit = models.IntegerField()
    pic = models.CharField(max_length=255, null=True)
-   #user = models.ForeignKey(User, on_delete=models.CASCADE)
+   user = models.ForeignKey(User, on_delete=models.CASCADE, db_column='user_id')
 
    class Meta:
-      db_table = 'Lender'
+      db_table = 'Lender_Post'
       app_label = 'main'
       managed = False
 

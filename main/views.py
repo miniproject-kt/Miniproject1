@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import User, Borrower, Lender
+from .models import Borrower, Lender
 
 def index(request):
    """
