@@ -6,8 +6,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('main/', views.main),
-    path('category/', views.category),
-    path('form/post/', views.form_post),
+    path('category/', views.category, name='category'),
+    path('form/post/', views.form_post, name='post'),
     path('post/<int:pk>/', views.detail, name = 'detail'),
     
 ]
