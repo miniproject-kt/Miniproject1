@@ -1,5 +1,6 @@
 from msilib.schema import RadioButton
 from tkinter import Radiobutton
+from attr import attrs
 from django import forms
 from django.forms import TextInput, Textarea
 from . models import Posting
@@ -25,15 +26,16 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Posting
         fields = ['title', 'category' , 'deposit', 'pic', 'body']
+
     title = forms.CharField()
-    category = forms.ChoiceField(widget = forms.Select(), choices=OPTION)
+    category = forms.ChoiceField(widget = forms.Select(attrs={'class' : 'form-select'}), choices=OPTION)
     deposit = forms.IntegerField()
     pic = forms.ImageField()
-    body = forms.CharField(widget=forms.Textarea)
+    body = forms.CharField(widget=forms.Textarea(attrs={'class' : 'form-control'}))
+
+    title.widget.attrs.update({'class':'form-control'})
+
+    deposit.widget.attrs.update({'class':'form-control'})
+    # pic.widget.attrs.update({'class' : 'form-control'})
     
-    #     fields = ['board_title', 'category_opt', 'imgfile', 'board_content']
-    
-    # board_title = forms.CharField()
-    # category_opt = forms.ChoiceField(widget=forms.Select(), choices=OPTION)
-    # imgfile = forms.ImageField()
-    # board_content = forms.CharField(widget=forms.Textarea)
+        

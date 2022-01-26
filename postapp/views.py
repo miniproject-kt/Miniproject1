@@ -15,13 +15,13 @@ def category(request):
     now_page =int(request.GET.get('page', 1))
     post_list = Posting.objects.order_by('-l_posting_index')
                 # 포스트 , 보여줄 게시글 개수
-    p = Paginator(post_list, 3)
+    p = Paginator(post_list, 6)
     info = p.get_page(now_page)
 
-    start_page = (now_page - 1) // 3 * 3 + 1
-    end_page = start_page + 3
-    if end_page > p.num_pages:
-        end_page = p.num_pages
+    # start_page = (now_page - 1) // 3 * 3 + 1
+    # end_page = start_page + 3
+    # if end_page > p.num_pages:
+    #     end_page = p.num_pages
 
     # 페이지 마지막 번호
     last_page_num = 0
@@ -32,8 +32,8 @@ def category(request):
 
     context = {
         'info' : info,
-        'page_range' : range(start_page, end_page+1),
-        'now_page' : now_page
+        'now_page' : now_page,
+        'last_page_num' : last_page_num
     }
     return render(request, 'postapp/category.html', context)
 
@@ -44,7 +44,7 @@ def form_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             posting = form.save(commit=False)
-            posting.user_id = 1
+            posting.user_id = 5
             posting.save()
             
         return redirect('/postapp/category/')
