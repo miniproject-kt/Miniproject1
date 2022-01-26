@@ -2,11 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 import app.models as models
-from .models import User
-from .models import Lender
-from .models import Borrower
-from .models import Object
-from .models import User
 
 def index(request):
     
