@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/nice-select/nice-select.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/nouislider/nouislider.min.css' %}">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -104,7 +104,7 @@
 
         <div class="col-xl-9 col-lg-8 col-md-7">
           <!-- Start Filter Bar -->
-          <div class="filter-bar d-flex flex-wrap align-items-center">
+          {% comment %} <div class="filter-bar d-flex flex-wrap align-items-center">
             <div class="sorting">
               <select>
                 <option value="1">Default sorting</option>
@@ -127,7 +127,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> {% endcomment %}
           <!-- End Filter Bar -->
           <!-- Start Best Seller -->
           <section class="lattest-product-area pb-40 category-list">
@@ -138,7 +138,7 @@
                 <div class="card text-center card-product">
                   <div class="card-product__img" >
                     <a href = "{% url 'detail' post.l_posting_index %}">
-                    <img class="card-img" src = "{{ post.pic.url }}">
+                    <img class="card-img" src = "{{ post.pic.url }}" width="300"; height="300">
                     </a>
                   </div>
                   <div class="card-body">
@@ -150,20 +150,30 @@
               </div>
               {% endfor %}
 
-              <div style = 'text-align:center;'>
-                <ul>
-                  {%for i in page_range%}
-                    <li>
-                      <a href = "?page={{i}}">
-                        {{i}} </a>
-                      </li>
-                    {%endfor%}
-                    </ul>
-                </div>
-
-
             </div>
           </section>
+          <div style = 'text-align:center;'>
+            <ul class = 'pagination'>
+              {% if info.has_previous %}
+              <li> <a href="?page=1"> << </a></li>
+              <li> <a href="?page={{info.previous_page_number}}"> < </a> </li>
+              {%else%}
+              <li><a href = "#"> << </a></li>
+              <li><a href = "#"> < </a></li>
+              {% endif %}
+
+        
+              {% for i in page_range %}
+                <li>
+                  <a href = "?page={{i}}">
+                    {{i}} </a>
+                  </li>
+                {%endfor%}
+                {% if info.has_next %}
+              <li><a href="?page={{info.next_page_number}}"> > </a> </li>
+              {% endif %}
+                </ul>
+            </div>
           <!-- End Best Seller -->
         </div>
       </div>

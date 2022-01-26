@@ -31,12 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'postapp',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +79,29 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+
+    'posting': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rental13',
+        'USER': 'rental13',
+        'PASSWORD': '220128',
+        'HOST': '13.125.52.234',
+        'PORT': 3306
     }
+
+    #     'posting': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'rental13',
+    #     'USER': 'root',
+    #     'PASSWORD': 'aivle',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': 3306
+    # }
+
 }
+
+DATABASE_ROUTERS = ['postapp.router.DBRouter']
 
 
 # Password validation
@@ -105,16 +128,25 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+import os
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
