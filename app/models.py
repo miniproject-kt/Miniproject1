@@ -3,73 +3,67 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
-    user_index = models.IntegerField(primary_key=True)
+    user_index = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255,null=True)
     user_id = models.CharField(max_length=255,null=True)
     email = models.CharField(max_length=100, null=True)
-    pw = models.CharField(max_length=100, null=True)
+    addr = models.CharField(max_length=100, null=True)
+    pw = models.CharField(max_length=100)
     class Meta:
         db_table = 'User'
 
 class Lender(models.Model):
-    l_posting_index =  models.IntegerField(primary_key=True)
-    lender_index = models.IntegerField()
+    l_posting_index =  models.AutoField(primary_key=True)
+    lender_index = models.ForeignKey('User', on_delete = models.CASCADE, db_column="user_id")
     title = models.CharField(max_length=255,null=True)
     category =  models.CharField(max_length=255,null=True)
-    body = models.CharField(max_length=255,null=True)
-    rentalfee = models.IntegerField()	
-    longitude = models.FloatField()
-    latitude =models.FloatField()
+    body = models.TextField(null=True)
+    deposit = models.IntegerField()	
     object_num	= models.IntegerField()
-    pic	= models.CharField(max_length=255,null=True)
+    pic	= models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
-        db_table = 'Lender'
+        db_table = 'Lender_Post'
 
 class Borrower(models.Model):
-    b_posting_index =  models.IntegerField(primary_key=True)
-    borrower_index = models.IntegerField()	
+    b_posting_index =  models.AutoField(primary_key=True)
+    borrower_index = models.ForeignKey('User', on_delete = models.CASCADE, db_column="user_id")
     title = models.CharField(max_length=255,null=True)
     category =  models.CharField(max_length=255,null=True)
-    body = models.CharField(max_length=255,null=True)
-    longitude = models.FloatField()
-    latitude =models.FloatField()
+    body = models.TextField(null=True)
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
-        db_table = 'Borrower'
+        db_table = 'Borrower_Post'
 
 class Borrower_Chatting(models.Model):
-    b_chatting_index = models.IntegerField(primary_key=True)
-    #posting_index = models.ForeignKey('Borrower', related_name = 'Borrower', on_delete = models.CASCADE, db_column="posting_index")
+    b_chatting_index = models.AutoField(primary_key=True)
+    posting_index = models.ForeignKey('Borrower', on_delete = models.CASCADE, db_column="b_posting_index")
     #borrower_index = models.ForeignKey('Borrower', related_name = 'Borrower', on_delete = models.CASCADE, db_column="lender_index")		
     user_index = models.IntegerField()
     object_num = models.IntegerField() 
     date = models.DateTimeField(auto_now_add=True)
-    chatting =  models.CharField(max_length=255,null=True)
+    chatting =  models.TextField(null=True)
     class Meta:
-        db_table = 'B_Post_Chat'
+        db_table = 'Borrower_Chatting'
 
 class Lender_Chatting(models.Model):
-    l_chatting_index = models.IntegerField(primary_key=True)
-    #posting_index = models.ForeignKey('Lender', related_name = 'Lender', on_delete = models.CASCADE, db_column="posting_index")
+    l_chatting_index = models.AutoField(primary_key=True)
+    posting_index = models.ForeignKey('Lender', on_delete = models.CASCADE, db_column="l_posting_index")
     #lender_index = models.ForeignKey('Borrower', related_name = 'Borrower', on_delete = models.CASCADE, db_column="posting_index")	
     user_index = models.IntegerField()
     object_num = models.IntegerField() 
     date = models.DateTimeField(auto_now_add=True)
-    chatting =  models.CharField(max_length=255,null=True)
+    chatting =  models.TextField(null=True)
     class Meta:
-        db_table = 'L_Post_Chat'
+        db_table = 'Lender_Chatting'
 
 class Object(models.Model):
-    object_index = models.IntegerField(primary_key=True)
-
+    object_index = models.AutoField(primary_key=True)
     object_name	=  models.CharField(max_length=255,null=True)
-    borrower_index = models.IntegerField()
+    #borrower_index = models.IntegerField()
     posting_index	=models.IntegerField()
     category = models.CharField(max_length=255,null=True)
-    rental_fee	= models.IntegerField()
-    longitude =	models.FloatField()
-    latitude = models.FloatField()
+    deposit	= models.IntegerField()
     lender_index = models.IntegerField()
     class Meta:
         db_table = 'Object'
