@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Aroma Shop - Login</title>
+    <title>Aroma Shop - Reset Password </title>
     {% load static %}
     <link rel="icon" href="{% static 'img/Fevicon.png' %}" type="image/png">
     <link rel="stylesheet" href="{% static 'vendors/bootstrap/bootstrap.min.css' %}">
@@ -18,19 +18,8 @@
     <link rel="stylesheet" href="{% static 'vendors/nouislider/nouislider.min.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <style>
-        #check_id {
-            margin-top: 5px;
-            background-color: #b74b47; color: white;
-            border-radius: 4px;
-            transition-duration: 0.4s;
-            border: 2px solid #b74b47;
-        } /* Gray */
 
-        #reg_title{
-            margin-bottom: 30px;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -108,7 +97,7 @@
 		<div class="container h-100">
 			<div class="blog-banner">
 				<div class="text-center">
-					<h1>회원 가입</h1>
+					<h1>Find Password</h1>
 					{% comment %} <nav aria-label="breadcrumb" class="banner-breadcrumb">
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -123,60 +112,47 @@
 
     <!--================Login Box Area =================-->
     <section class="login_box_area section-margin">
-        {% comment %} <div class="container">
+        <div class="container">
             <div class="row">
-                <div class="col-lg-6"> {% endcomment %}
+                <div class="col-lg-6">
                     <div class="login_form_inner register_form_inner">
-                        <h2 id='reg_title'>회원 가입</h2>
-                        <form class="row login_form" method = 'post' action="{% url 'member:register' %}" id="register_form">
+                        <h3>비밀번호 재설정</h3>
+                        <form class="row login_form" method = 'post' action="{% url 'member:reset' %}" id="find_form">
                             {% csrf_token %}
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력해주세요."
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
-                            </div>
                             <div class="col-md-12 form-group">
                                 <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'">
-                                    <button id = 'check_id' >중복 확인</button>
                             </div>
                             <div class="col-md-12 form-group">
                                 <input type="email" class="form-control" id="user_email" name="user_email"
                                     placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = '이메일을 입력해주세요.'">
-                                <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="password" class="form-control" id="pw" name="pw"
-                                    placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = '비밀번호를 입력해주세요.'">
-                                <div class="valid_pw" id="valid_pw"></div>
+                                <input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="비밀번호를 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호를 입력해주세요.'">
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="password" class="form-control" id="double_pw" name="double_pw"
-                                    placeholder="비밀번호를 한번 더 입력해주세요." onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'">
-                                    <div class="check_pw" id="pw_check"></div>
+                                <input type="password" class="form-control" id="confirm_pw" name="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'">
+                                    <div class="pw_check" id="pw_check"></div>
                             </div>
-                            {% comment %} <div class="col-md-12 form-group">
-                                <div class="creat_account">
-                                    <input type="checkbox" id="f-option2" name="selector">
-                                    <label for="f-option2">Keep me logged in</label>
-                                </div>
-                            </div> {% endcomment %}
+
                             <div class="col-md-12 form-group">
                                 <button type="submit" value="submit"
-                                    class="button button-register w-100" id = 'reg_submit'>가입</button>
+                                    class="button button-register w-100" id = 'reset_pw'>비밀번호 재설정</button>
+                                <a href="{% url  'member:login' %}">로그인</a>
                             </div>
                         </form>
                     </div>
-                {% comment %} </div>
+                </div>
             </div>
-        </div> {% endcomment %}
+        </div>
     </section>
     <!--================End Login Box Area =================-->
 
 
-    <!--================Start Register Script Area =================-->
+    <!--================Start Find Script Area =================-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
         function getCookie(name) {
@@ -195,99 +171,11 @@
         }
     </script>
     <script>
-        // 아이디 중복 체크
-        document.querySelector("#check_id").addEventListener("click", (e) => {
-            e.preventDefault();
-
-            let user_id = document.querySelector("[name=user_id]").value;
-            
-            if (user_id == '') {
-                alert("사용 불가능한 ID입니다!");
-            }
-            else{
-                // const data = axios({
-                //         url: '/member/register/',
-                //         method: 'get',
-                //         params: {
-                //             'user_id':user_id
-                //         }
-                //     });
-
-                // data.then(function (result) {
-                //     if (result.data == '존재') {
-                //         alert("사용 불가능한 ID입니다!");
-                //     }
-                //     else{
-                //         alert("사용 가능한 ID입니다!");
-                //     }
-                // });
-
-                const csrftoken = getCookie('csrftoken');
-                const data = { 'user_id': user_id};
-                const ajax = axios({
-                    url: '/member/register/check/',
-                    method: 'post',
-                    data: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken
-                    }
-                });
-                ajax.then(function (result) {
-                    if (result.data == '존재') {
-                        alert("사용 불가능한 ID입니다!");
-                    }
-                    else{
-                        alert("사용 가능한 ID입니다!");
-                    }
-                });
-            }
-        });
-
-
-        // 이메일 유효성
-        document.querySelector("[name=user_email]").addEventListener("keydown", (e) => {
-    
-            let user_email = document.querySelector("[name=user_email]").value;
-            
-            const regEmail = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-
-            if(regEmail.test(user_email)) {
-                document.querySelector("#email_check").textContent = "";
-            }
-            else{
-                document.querySelector("#email_check").textContent = "* 이메일 형식에 맞게 작성해주세요.";
-                document.querySelector("#email_check").style.color = 'red';
-                document.querySelector("#email_check").style.fontSize = '2px';
-            }
-        });
-
-
-        // 패스워드 유효성
-        document.querySelector("[name=pw]").addEventListener("keyup", (e) => {
-            let corr_pw = /[a-zA-Z0-9]/;
-            let pw = document.querySelector("[name=pw]").value;
-            document.querySelector("#valid_pw").textContent = "";
-
-            if (pw.length == 0){
-                document.querySelector("#valid_pw").textContent = "";
-            }
-            else if(pw.length < 8 | pw.includes(" ") | !corr_pw.test(pw) ) {
-                document.querySelector("#valid_pw").textContent = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
-                document.querySelector("#valid_pw").style.color = 'red';
-                document.querySelector("#valid_pw").style.fontSize = '2px';
-            }
-            else{
-                document.querySelector("#valid_pw").textContent = "";
-            }
-        });
-
-
         // 패스워드2 일치 여부
-        document.querySelector("[name=double_pw]").addEventListener("keyup", (e) => {
+        document.querySelector("[name=confirm_pw]").addEventListener("keydown", (e) => {
             
-            let user_pw1 = document.querySelector("[name=pw]").value;
-            let user_pw2 = document.querySelector("[name=double_pw]").value;
+            let user_pw1 = document.querySelector("[name=user_pw]").value;
+            let user_pw2 = document.querySelector("[name=confirm_pw]").value;
             
             // 다른 키를 하나 더 눌러야 인식됨
             if(user_pw1 == user_pw2) {
@@ -300,29 +188,42 @@
             }
         });
 
-        // 모든 필드 입력 확인
-        document.querySelector("#reg_submit").addEventListener("click", (e) => {
+        // 비밀번호 재설정 버튼 클릭
+        document.querySelector("#reset_pw").addEventListener("click", (e) => {
             e.preventDefault();
 
-            let username = document.querySelector("[name=username]").value;
             let user_id = document.querySelector("[name=user_id]").value;
             let user_email = document.querySelector("[name=user_email]").value;
-            let user_pw1 = document.querySelector("[name=pw]").value;
-            let user_pw2 = document.querySelector("[name=double_pw]").value;
-            
-            if (username == "" | user_id == "" | user_email == ""
-                | user_pw1 == "" | user_pw2 == ""){
-                    alert("모두 입력해주세요!");
+            let user_pw = document.querySelector("[name=user_pw]").value;
+            let confirm_pw = document.querySelector("[name=confirm_pw]").value;
+
+            if (user_email == '' | user_id == '' | user_pw == '' | confirm_pw == '') {
+                alert("정보를 입력해주세요!");
             }
             else{
-                document.querySelector("#register_form").submit();
+                const csrftoken = getCookie('csrftoken');
+                const data = { 'pw': user_pw, 'user_id':user_id, 'user_email': user_email};
+                const ajax = axios({
+                    url: '/member/login/reset/userpw/',
+                    method: 'post',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }
+                });
+                ajax.then(function (result) {
+                    if (result.data == '입력된 정보를 찾을 수 없습니다.') {
+                        alert("존재하지 않는 정보입니다.");
+                    }
+                    else{
+                        alert(result.data);
+                    }
+                });
             }
-
-
         });
-
     </script>
-    <!--================End Register Script Area =================-->
+    <!--================End Find Script Area =================-->
 
 
     <!--================ Start footer Area  =================-->

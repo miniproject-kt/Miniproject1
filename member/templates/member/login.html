@@ -131,13 +131,13 @@
 						<form method='post' action="{% url 'member:login' %}">
 							{% csrf_token %}
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="user_id" name="user_id" placeholder="UserID"
-									onfocus="this.placeholder = ''" onblur="this.placeholder = 'UserID'">
+								<input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'">
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="password" class="form-control" id="pw" name="pw"
-									placeholder="Password" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'Password'">
+									placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '비밀번호를 입력해주세요.'">
 							</div>
 							{% comment %} <div class="col-md-12 form-group">
 								<div class="creat_account">
@@ -147,8 +147,9 @@
 							</div> {% endcomment %}
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="button button-login w-100" id='login_submit'>Log In</button>
-								<a href="{% url  'member:find' %}">Forgot ID/Password?</a>
-								<a href="{% url  'member:register' %}">Create an Account</a>
+								<a href="{% url  'member:find' %}">아이디 찾기</a>
+								<a href="{% url  'member:reset' %}">비밀번호 재설정</a>
+								<a href="{% url  'member:register' %}">회원가입</a>
 							</div>
 						</form>
 					</div>
@@ -162,6 +163,22 @@
 	<!--================ Start Login Script Area  =================-->
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+	<script>
 		// 아이디 중복 체크
 		document.querySelector("#login_submit").addEventListener("click", (e) => {
 			e.preventDefault();
@@ -169,16 +186,37 @@
 			let userId = document.querySelector("[name=user_id]").value;
 			let userPw = document.querySelector("[name=pw]").value;
 	
-			const data = axios({
-					url: '/member/login/valid/',
-					method: 'GET',
-					params: {
-						'user_id':userId,
-						'pw': userPw,
-					},
-				});
+			// const data = axios({
+			// 		url: '/member/login/valid/',
+			// 		method: 'GET',
+			// 		params: {
+			// 			'user_id':userId,
+			// 			'pw': userPw,
+			// 		},
+			// 	});
 	
-			data.then(function (result) {
+			// data.then(function (result) {
+			// 	console.log(result.data)
+			// 	if (result.data == 'Error1' | result.data == 'Error2') {
+			// 		alert("아이디 또는 패스워드가 틀렸습니다.");
+			// 	}
+			// 	else{
+			// 		document.querySelector("form").submit();
+			// 	}
+			// });
+
+			const csrftoken = getCookie('csrftoken');
+			const data = { 'user_id': userId, 'pw': userPw, };
+			const ajax = axios({
+				url: '/member/login/valid/',
+				method: 'post',
+				data: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken
+				}
+			});
+			ajax.then(function (result) {
 				console.log(result.data)
 				if (result.data == 'Error1' | result.data == 'Error2') {
 					alert("아이디 또는 패스워드가 틀렸습니다.");
