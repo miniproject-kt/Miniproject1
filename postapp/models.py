@@ -42,7 +42,7 @@ class Object(models.Model):
     object_index = models.AutoField(primary_key=True)
     object_name	=  models.CharField(max_length=255,null=True)
     #borrower_index = models.IntegerField()
-    posting_index = models.ForeignKey('Lender', on_delete = models.CASCADE, db_column="l_posting_index")
+    posting_index = models.ForeignKey('Posting', on_delete = models.CASCADE, db_column="l_posting_index")
     category = models.CharField(max_length=255,null=True)
     deposit	= models.IntegerField()
     lender_index = models.IntegerField()
@@ -52,24 +52,11 @@ class Object(models.Model):
         app_label = 'postapp'
         managed = False
 
-class Lender(models.Model):
-    l_posting_index =  models.AutoField(primary_key=True)
-    lender_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")
-    title = models.CharField(max_length=255,null=True)
-    category =  models.CharField(max_length=255,null=True)
-    body = models.TextField(null=True)
-    deposit = models.IntegerField(default=0, null=True)	
-    pic	= models.CharField(max_length=255)
-    date = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        db_table = 'Lender_Post'
-        app_label = 'postapp'
-        managed = False
 
 
 class Lender_Chatting(models.Model):
     l_chatting_index = models.AutoField(primary_key=True)
-    posting_index = models.ForeignKey('lender', on_delete = models.CASCADE, db_column="l_posting_index")
+    posting_index = models.ForeignKey('Posting', on_delete = models.CASCADE, db_column="l_posting_index")
     lender_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
     user_index = models.IntegerField()
     object_num = models.IntegerField() 

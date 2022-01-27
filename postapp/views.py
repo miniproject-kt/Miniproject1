@@ -3,7 +3,7 @@ from turtle import pos
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from sympy import Q
-from .models import Posting, User, Lender_Chatting
+from .models import Posting, User, Lender_Chatting, Object
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
@@ -54,8 +54,13 @@ def form_post(request):
             user = User.objects.get(user_id = request.session['user_id'])
             posting.user_id = user.user_index
             posting.save()
-            
-        return redirect('/postapp/category/')
+
+            object = Object()
+            object.object_name = posting.title
+            object.deposit = posting.deposit
+            # object.posting_index = posting.l_posting_index
+            return HttpResponse(posting.l_posting_index)
+        # return redirect('/postapp/category/')
     else:
         form = PostForm()
 
@@ -76,7 +81,7 @@ def detail(request, pk):
         comment.user_id = user.user_id
         comment.user_index = user.user_index
         comment.chatting = request.POST['body']
-        comment.posting_index = result.l_posting_index
+        comment.l_posting_index = result.l_posting_index
         comment.save()
 
     return render(request, 'postapp/post_detail.html', context)
