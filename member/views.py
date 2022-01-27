@@ -11,7 +11,7 @@ def register(request):
     # if request.method == 'GET':
     #     user_id = request.GET.get('user_id')
 
-    #     if UserTable.objects.filter(user_id = user_id).exists():
+    #     if User.objects.filter(user_id = user_id).exists():
     #         return HttpResponse("존재")
 
     if request.method == 'POST':
@@ -19,23 +19,26 @@ def register(request):
         pw = request.POST.get('pw')
         confirm_pw = request.POST.get('double_pw')
         username = request.POST.get('username')
-        user_email = request.POST.get('user_email')
+        email = request.POST.get('email')
 
-        if (user_id=="") or (pw=="") or (confirm_pw=="") or (username=="") or (user_email==""):
-            return 
+        postid = request.POST.get('postid')
+        addr = request.POST.get('addr')
 
+        # detail_addr = request.POST.get('detail_addr')
+
+        # if (user_id=="") or (pw=="") or (confirm_pw=="") or (username=="") or (email==""):
+        #     return 
 
         # 입력 이메일 형식이 잘못되었거나 이미 존재하는 메일인 경우,
-        if User.objects.filter(email = user_email).exists():
+
+        if User.objects.filter(email = email).exists():
             return HttpResponse("이미 가입된 이메일입니다.")
 
         # 1차 패스워드와 2차 패스워드가 동일하면 DB 저장
         if pw == confirm_pw:
-            m = User(user_id=user_id, pw=PasswordHasher().hash(pw), username=username, email = user_email)
-            m.register_date = timezone.now()
-            m.save()
-
-            return redirect('member:login') # 회원가입 성공 후, 메인 페이지로 이동
+            m = User(user_id=user_id, pw=PasswordHasher().hash(pw), 
+                            username=username, email = email,  addr = addr)# postid = postid, addr = addr, detail_addr = detail_addr)
+            return render(request, 'main/main.html') # 회원가입 성공 후, 메인 페이지로 이동
     
     return render(request, 'member/register.html')
 
@@ -58,14 +61,15 @@ def login(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         pw = request.POST.get('pw')
-        
-        corr_pw = UserTable.objects.get(user_id=user_id).pw # 암호화 된 pw
+
+        corr_pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
+
         m = User.objects.get(user_id=user_id, pw=corr_pw)
 
         request.session['user_id'] = m.user_id
         request.session['username'] = m.username
 
-        return redirect('member:login')
+        return render(request, 'main/main.html')
         
     else:
         return render(request, 'member/login.html')
@@ -99,21 +103,21 @@ def logout(request):
     del request.session['username'] # 개별 삭제
     request.session.flush() # 전체 삭제
 
-    return redirect('member:login') # 메인페이지로 설정
+    return redirect('main/main.html') # 메인페이지로 설정
 
     
 def find(request):
     return render(request, 'member/finduser.html')
     # if request.method == 'POST':
     #     username = request.POST.get('username')
-    #     user_email = request.POST.get('user_email')
+    #     email = request.POST.get('email')
 
     #     try:
-    #         user_id = UserTable.objects.get(username=username, user_email=user_email).user_id
+    #         user_id = User.objects.get(username=username, email=email).user_id
     #         find_info = f"{username}님의 ID는 {user_id}입니다."
     #         return HttpResponse(find_info)
 
-    #     except UserTable.DoesNotExist as e:
+    #     except User.DoesNotExist as e:
     #         return HttpResponse('Not Found ID')
 
 import json
@@ -122,10 +126,10 @@ def find_userid(request):
     data = json.loads(obj)
 
     username = data['username']
-    user_email = data['user_email']
+    email = data['email']
 
     try:
-        user_id = User.objects.get(username=username, email=user_email).user_id
+        user_id = User.objects.get(username=username, email=email).user_id
         find_info = f"{username}님의 ID는 {user_id}입니다."
         return HttpResponse(find_info)
 
@@ -142,11 +146,11 @@ def reset_userpw(request):
     data = json.loads(obj)
 
     user_id = data['user_id']
-    user_email = data['user_email']
+    email = data['email']
     chg_pw = data['pw']
 
     try:
-        user = User.objects.get(user_id = user_id, email=user_email)
+        user = User.objects.get(user_id = user_id, email=email)
         user.pw = PasswordHasher().hash(chg_pw)
         user.save()
         return HttpResponse("비밀번호가 변경되었습니다.")
