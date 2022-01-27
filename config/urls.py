@@ -22,7 +22,12 @@ from app import views
 from main import views
 from postapp import views
 from member import views
+<<<<<<< HEAD
 >>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
+=======
+from django.conf import settings
+from django.conf.urls.static import static
+>>>>>>> 7157aa9c7f399f1ad35e39fcaac536820b87565a
 
 urlpatterns = [
     path('',include('member.urls')),
@@ -36,7 +41,11 @@ urlpatterns = [
     path('main/', include('main.urls')),
     path('postapp/', include('postapp.urls')),
     path('member/', include('member.urls'))
+<<<<<<< HEAD
 
 
 >>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
+=======
+>>>>>>> 7157aa9c7f399f1ad35e39fcaac536820b87565a
 ]
+urlpatterns +=static(settings.MEDIA_URL, document_root  = settings.MEDIA_ROOT)

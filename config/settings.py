@@ -184,4 +184,16 @@ STATICFILES_DIRS = [
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 ) 
+<<<<<<< HEAD
 >>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
+=======
+
+MEDIA_URL = '/media/'
+
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3aabb0173346c055a87fb182458a42e365a43a43
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+>>>>>>> 7157aa9c7f399f1ad35e39fcaac536820b87565a
