@@ -181,7 +181,7 @@
                                     </div> 
                                     <div class="mb-3"> 
                                         <label for="email">이메일</label> <span style="color: red">*</span>
-                                        <input type="email" class="form-control" id="user_email" name="user_email"
+                                        <input type="email" class="form-control" id="email" name="email"
                                         placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = '이메일을 입력해주세요.'">
                                         <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
@@ -200,9 +200,9 @@
                                         <label for="addr">주소</label> <span style="color: red">*</span>
                                         <input type="text" class="form-control" id="addr" name="addr" placeholder=""><br>
 
-                                        <label for="detail_addr">상세주소</label> <span style="color: red">*</span>
+                                        <label for="detail_addr">상세주소</label> <!--<span style="color: red">*</span>-->
                                         <input type="text" class="form-control" id="detail_addr" name = "detail_addr" placeholder="">
-                                        <div class="check_detail_addr" id="check_detail_addr"> </div> <!-- check_detail_addr이 입력됐는지 체크-->
+                                        <!-- <div class="check_detail_addr" id="check_detail_addr"> </div> check_detail_addr이 입력됐는지 체크-->
                                     </div>
                                     <div class="mb-4">
 
@@ -238,7 +238,7 @@
                                     <button id = 'check_id' >중복 확인</button>
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="email" class="form-control" id="user_email" name="user_email"
+                                <input type="email" class="form-control" id="email" name="email"
                                     placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = '이메일을 입력해주세요.'">
                                 <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
@@ -321,15 +321,15 @@
 
 
         // 이메일 유효성
-        document.querySelector("[name=user_email]").addEventListener("keyup", (e) => {
+        document.querySelector("[name=email]").addEventListener("keyup", (e) => {
     
-            let user_email = document.querySelector("[name=user_email]").value;
+            let email = document.querySelector("[name=email]").value;
             
             const regEmail = /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-            if (user_email == ""){
+            if (email == ""){
                 document.querySelector("#email_check").innerHTML = "";
             }
-            else if(regEmail.test(user_email)) {
+            else if(regEmail.test(email)) {
                 document.querySelector("#email_check").innerHTML = "";
             }
             else{
@@ -383,16 +383,16 @@
 
             let username = document.querySelector("[name=username]").value;
             let user_id = document.querySelector("[name=user_id]").value;
-            let user_email = document.querySelector("[name=user_email]").value;
+            let email = document.querySelector("[name=email]").value;
             let user_pw1 = document.querySelector("[name=pw]").value;
             let user_pw2 = document.querySelector("[name=double_pw]").value;
             
-            //let postid = document.querySelector("[name=postid]").value;
-            //let addr = document.querySelector("[name=addr]").value;
+            let postid = document.querySelector("[name=postid]").value;
+            let addr = document.querySelector("[name=addr]").value;
             //let detail_addr = document.querySelector("[name=detail_addr]").value;
 
-            if (username == "" | user_id == "" | user_email == ""
-                | user_pw1 == "" | user_pw2 == "" ){//| postid == "" | detail_addr == ""){
+            if (username == "" | user_id == "" | email == ""
+                | user_pw1 == "" | user_pw2 == "" | postid == "" ){//| detail_addr == ""){
                     alert("모두 입력해주세요!");
             }
             else{
