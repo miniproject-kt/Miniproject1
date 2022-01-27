@@ -162,15 +162,14 @@
             var usernames = []
 
             {% for member in members %}
-              addresses.push("{{ member.address }}")
+              addresses.push("{{ member.addr }}")
               usernames.push("{{ member.username }}")
             {% endfor %}
 
             {% for post in posts %}
-              postIds.push("{{ post.id }}")
+              postIds.push("{{ post.l_posting_index }}")
             {% endfor %}
-
-
+            
             var conversion = new Map()
             for (var i=0; i<addresses.length; i++) {
               conversion.set(addresses[i], [usernames[i], postIds[i]])
