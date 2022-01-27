@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from member.models import User
 from argon2 import PasswordHasher # 패스워드 암호화
@@ -27,7 +27,7 @@ def register(request):
                             username=username, email = email,  addr = addr)
             m.register_date = timezone.now()
             m.save()
-            return render(request, 'main/main.html') # 회원가입 성공 후, 메인 페이지로 이동
+            return HttpResponseRedirect('/main/')
     
     return render(request, 'member/register.html')
 
@@ -58,7 +58,7 @@ def login(request):
         request.session['user_id'] = m.user_id
         request.session['username'] = m.username
 
-        return render(request, 'main/main.html')
+        return HttpResponseRedirect('/main/')
         
     else:
         return render(request, 'member/login.html')
@@ -92,7 +92,7 @@ def logout(request):
     del request.session['username'] # 개별 삭제
     request.session.flush() # 전체 삭제
 
-    return render(request, 'main/main.html')
+    return HttpResponseRedirect('/main/')
 
     
 def find(request):
