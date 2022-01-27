@@ -1,4 +1,5 @@
 # from http.client import HTTPResponse
+from turtle import pos
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .models import Posting, User
@@ -51,7 +52,8 @@ def form_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             posting = form.save(commit=False)
-            posting.user_id = request.session['user_id']
+            user = User.objects.get(user_id = request.session['user_id'])
+            posting.user_id = user.user_index
             posting.save()
             
         return redirect('/postapp/category/')
@@ -71,18 +73,24 @@ def detail(request, pk):
     return render(request, 'postapp/post_detail.html', context)
 
 
-def edit(request, post_id):
-    posting = Posting.objects.get(l_posting_index = post_id)
-
+def edit(request, pk):
+    posting = Posting.objects.get(l_posting_index = pk)
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES, instance=posting)
         if form.is_valid():
-            posting = form.save()
+            posting = form.save(commit=False)
+            posting.save()
             
-        return redirect('/postapp/category/')
+            return redirect('/postapp/category/')
     else:
-        form = PostForm()
+        form = PostForm(instance=posting)
 
-    return render(
-        request, 'postapp/form_post.html', {'form' : form}
-    )
+        return render(
+            request, 'postapp/form_post.html', {'form' : form}
+        )
+
+
+def delete(request, pk):
+    post = Posting.objects.get(l_posting_index = pk)
+    post.delete()
+    return redirect('/postapp/category')
