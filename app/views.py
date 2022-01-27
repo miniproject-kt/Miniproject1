@@ -9,10 +9,17 @@ from .models import Object
 from .models import User
 from django.utils import timezone
 import datetime
+from .models import Borrower, Lender, User
 
-def index(request):
-    
-    return render(request, 'app/maketable.html')
+def mypage(request):
+        
+    borrower = Borrower.objects.order_by('-b_posting_index')[:4]
+    lender = Lender.objects.order_by('-l_posting_index')[:4]
+    context = {
+      'borrower': borrower,
+      'lender': lender
+      }
+    return render(request, 'app/mypage.html',context)
 
 
 def insert(request):
