@@ -13,12 +13,11 @@
               <li>이름: {{request.session.username}}</li>
             </ul>
           </nav>
-          <h1 align = "left">포스팅</h1>
+          <h1 align = "left">내 포스팅</h1>
           <hr class="solid">
-
+          
           <div class="row">
             {% for post in lender %}
-              {% if post.user.username == request.session.username %}
                 <div class="col-md-6 col-lg-4 col-xl-3">
                   <div class="card text-center card-product">
                       <div class="card-product__img">
@@ -38,7 +37,6 @@
                       </div>
                   </div>
                 </div>
-                {% endif %}
               {% endfor %}
             </div>
           </div>
