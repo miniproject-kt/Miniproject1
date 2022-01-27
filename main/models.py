@@ -32,5 +32,3 @@ class Borrower(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Borrower_Post'
-
-
