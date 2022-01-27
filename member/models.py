@@ -11,3 +11,4 @@ class User(models.Model):
     register_date = models.DateTimeField(auto_now_add=True) # 등록 날짜
     class Meta:
         db_table = 'User'
+        managed = False

@@ -9,6 +9,7 @@ class User(models.Model):
     pw = models.CharField(max_length=100)
     class Meta:
         db_table = 'User'
+        managed = False
 
 class Lender(models.Model):
     l_posting_index =  models.AutoField(primary_key=True)
@@ -21,6 +22,7 @@ class Lender(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Lender_Post'
+        managed = False
 
 class Borrower(models.Model):
     b_posting_index =  models.AutoField(primary_key=True)
@@ -31,6 +33,7 @@ class Borrower(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Borrower_Post'
+        managed = False
 
 class Object(models.Model):
     object_index = models.AutoField(primary_key=True)
@@ -42,4 +45,5 @@ class Object(models.Model):
     lender_index = models.IntegerField()
     class Meta:
         db_table = 'Object'
+        managed = False
 

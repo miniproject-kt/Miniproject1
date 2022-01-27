@@ -10,6 +10,7 @@ class User(models.Model):
     register_date = models.DateTimeField(auto_now_add=True) # 등록 날짜
     class Meta:
         db_table = 'User'
+        managed = False
 
 class Lender(models.Model):
     l_posting_index =  models.AutoField(primary_key=True)
@@ -22,6 +23,7 @@ class Lender(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Lender_Post'
+        managed = False
 
 class Borrower(models.Model):
     b_posting_index =  models.AutoField(primary_key=True)
@@ -32,3 +34,4 @@ class Borrower(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Borrower_Post'
+        managed = False
