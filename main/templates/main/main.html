@@ -23,9 +23,9 @@
              <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
                <div class="hero-banner__content">
                  <h4>물건을 공유하세요!</h4>
-                 <h1>[]로 이웃과 물건을 공유하세요</h1>
-                 <p>[]를 통해 이웃에게 필요한 물건을 빌리거나, 이웃에게 물건을 빌려주세요. 물건 공유를 통해 물건에 날개를 달아주세요!</p>
-                 <a class="button button-hero" href="#">지금 확인하기</a>
+                 <h1>쉐어띵즈로 이웃과 물건을 공유하세요</h1>
+                 <p>쉐어띵즈를 통해 이웃에게 필요한 물건을 빌리거나, 이웃에게 물건을 빌려주세요. 물건 공유를 통해 물건에 날개를 달아주세요!</p>
+                 <a class="button button-hero" href="/postapp/category/">지금 확인하기</a>
                </div>
              </div>
            </div>
@@ -44,9 +44,9 @@
             <div class="col-md-6 col-lg-4 col-xl-3">
                <div class="card text-center card-product">
                   <div class="card-product__img">
-                     <a href="/board/{{post.l_posting_index}}/">
+                     <a href="/postapp/post/{{post.l_posting_index}}/">
                      {% if post.pic %}
-                        <img class="card-img2" src="{{post.pic}}" alt="" onerror="this.src = '/static/img/object/0.png'">
+                        <img class="card-img2" src="{{ post.pic.url }}" alt="" onerror="this.src = '/static/img/object/0.png'">
                      {% else %}
                         <img class="card-img2" src="/static/img/object/0.png" alt="">
                      {% endif %}
@@ -60,10 +60,10 @@
              -->
                   </div>
                   <div class="card-body">
-                     <h4 class="card-product__title"><a href="/board/{{post.l_posting_index}}/">{{ post.title }}</a>
+                     <h4 class="card-product__title"><a href="/postapp/post/{{post.l_posting_index}}/">{{ post.title }}</a>
                      </h4>
                      <p class="card-product__price">{{ post.deposit|intcomma }}원</p>
-                     <p>{{ post.user.username }}</p>
+                     <p>{{ post.lender_index.username }}</p>
                   </div>
                </div>
             </div>

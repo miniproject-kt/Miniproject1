@@ -15,16 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
 from django.conf.urls import url
 from app import views
 from main import views
 from postapp import views
 from member import views
-
 from django.conf import settings
 from django.conf.urls.static import static
-
 
 urlpatterns = [
     path('',include('member.urls')),

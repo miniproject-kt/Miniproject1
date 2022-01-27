@@ -1,7 +1,8 @@
 # from http.client import HTTPResponse
+from turtle import pos
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Posting
+from .models import Posting, User
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
@@ -51,7 +52,8 @@ def form_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             posting = form.save(commit=False)
-            posting.user_id = 5
+            user = User.objects.get(user_id = request.session['user_id'])
+            posting.user_id = user.user_index
             posting.save()
             
         return redirect('/postapp/category/')
@@ -66,6 +68,28 @@ def form_post(request):
 
 def detail(request, pk):
     result = get_object_or_404(Posting, l_posting_index = pk)
-    context = {'result' : result}
+    user = User.objects.get(user_index = result.user_id)
+    context = {'result' : result, 'user' : user}
     return render(request, 'postapp/post_detail.html', context)
 
+
+def edit(request, pk):
+    posting = Posting.objects.get(l_posting_index = pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+
+            posting.save()
+            return redirect('/postapp/category/')
+    else:
+        form = PostForm(instance=posting)
+
+    return render(
+            request, 'postapp/post_edit.html', {'form' : form}
+        )
+
+
+def delete(request, pk):
+    post = Posting.objects.get(l_posting_index = pk)
+    post.delete()
+    return redirect('/postapp/category')

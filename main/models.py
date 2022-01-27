@@ -19,7 +19,7 @@ class Lender(models.Model):
     category =  models.CharField(max_length=255,null=True)
     body = models.TextField(null=True)
     deposit = models.IntegerField(default=0, null=True)	
-    pic	= models.CharField(max_length=255)
+    pic	= models.ImageField()
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
         db_table = 'Lender_Post'
