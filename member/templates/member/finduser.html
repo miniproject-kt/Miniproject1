@@ -144,7 +144,7 @@
                                     onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="email" class="form-control" id="user_email" name="user_email"
+                                <input type="email" class="form-control" id="email" name="email"
                                     placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
                                     onblur="this.placeholder = '이메일을 입력해주세요.'">
                                 <div class="find_result" id="find_result"></div>
@@ -187,14 +187,14 @@
             e.preventDefault();
 
             let username = document.querySelector("[name=username]").value;
-            let user_email = document.querySelector("[name=user_email]").value;
+            let email = document.querySelector("[name=email]").value;
 
-            if (user_email == '' | user_email == 'user_email' | username == '' | username == 'username') {
+            if (email == '' | email == 'email' | username == '' | username == 'username') {
                 alert("정보를 입력해주세요!");
             }
             else{
                 const csrftoken = getCookie('csrftoken');
-                const data = { 'username': username, 'user_email': user_email};
+                const data = { 'username': username, 'email': email};
                 const ajax = axios({
                     url: '/member/login/find/userid/',
                     method: 'post',
