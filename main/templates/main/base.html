@@ -67,7 +67,7 @@
                   </ul>
                   <ul class="nav-shop">
                   {% if request.session.user_id%}
-                  <li class="nav-item"><button onclick = "location.href='#';"> {{ request.session.username }}님 </button></li>
+                  <li class="nav-item"><button onclick = "location.href='/app/mypage'"> {{ request.session.username }}님 </button></li>
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:logout' %}">Logout</a></li>
                   {% else %}
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:login' %}">Login</a></li>
