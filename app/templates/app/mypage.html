@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<main class="site-main">
+	<section class="" id="contact">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>My Page</h1>
+					<nav >
+            <ul >
+              <li>아이디: {{request.session.user_id}}</li>
+              <li>이름: {{request.session.username}}</li>
+            </ul>
+          </nav>
+          <h1 align = "left">내 포스팅</h1>
+          <hr class="solid">
+          
+          <div class="row">
+            {% for post in lender %}
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                  <div class="card text-center card-product">
+                      <div class="card-product__img">
+                        <a href="/board/{{post.l_posting_index}}/">
+                        {% if post.pic %}
+                            <img class="card-img2" src="{{post.pic}}" alt="" onerror="this.src = '/static/img/object/0.png'">
+                        {% else %}
+                            <img class="card-img2" src="/static/img/object/0.png" alt="">
+                        {% endif %}
+                        </a>
+                      </div>
+                      <div class="card-body">
+                        <h4 class="card-product__title"><a href="/board/{{post.l_posting_index}}/">{{ post.title }}</a>
+                        </h4>
+                        <p class="card-product__price">{{ post.deposit}}원</p>
+                        <p>{{ post.user.username }}</p>
+                      </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          
+				</div>
+			</div>
+    </div>
+	</section>
+</main>
+  
+{% endblock %}

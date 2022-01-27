@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from member.models import User
 from argon2 import PasswordHasher # 패스워드 암호화
@@ -19,7 +19,7 @@ def register(request):
         addr = request.POST.get('addr')
 
         if User.objects.filter(email = email).exists():
-            return HttpResponse("이미 가입된 이메일입니다.")
+            return redirect('/member/register/')
 
         # 1차 패스워드와 2차 패스워드가 동일하면 DB 저장
         if pw == confirm_pw:
@@ -27,7 +27,7 @@ def register(request):
                             username=username, email = email,  addr = addr)
             m.register_date = timezone.now()
             m.save()
-            return HttpResponseRedirect('/main/')
+            return HttpResponseRedirect('/main/') # 회원가입 성공 후, 메인 페이지로 이동
     
     return render(request, 'member/register.html')
 
@@ -135,3 +135,108 @@ def reset_userpw(request):
 
     except User.DoesNotExist as e:
         return HttpResponse('입력된 정보를 찾을 수 없습니다.')
+
+def mypage(request):
+    if request.method == 'POST':
+        return render(request, 'member/chgMyinfo.html')
+    else:
+        return render(request, 'member/mypage.html')
+
+def valid_mypage(request):
+    obj = request.body.decode("utf-8")
+    data = json.loads(obj)
+    
+    user_id = data['user_id']
+    pw = data['pw']
+
+    if request.session['user_id'] != user_id:
+        return HttpResponse('Error2')
+
+    # 회원정보 조회 실패 시 예외 발생
+    try:
+        corr_pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
+
+        try:
+            if PasswordHasher().verify(corr_pw.encode(), pw.encode()): # 패스워드 확인
+                return HttpResponse()
+
+        except VerifyMismatchError as e: # 패스워드 틀린 사용자
+            return HttpResponse('Error1')
+
+    except User.DoesNotExist as e: # 없는 사용자
+        return HttpResponse('Error2')
+        
+    return JsonResponse(data)
+
+
+def chg_info(request):
+    if request.method == 'POST':
+        return HttpResponseRedirect('/main/')
+    else:
+        return render(request, 'member/chgMyinfo.html')
+
+
+def valid_myinfo(request):
+    obj = request.body.decode("utf-8")
+    data = json.loads(obj)
+    
+    user_id = data['user_id']
+    curr_pw = data['pw']
+    new_pw = data['new_pw']
+    username = data['username']
+    email = data['email']
+    addr = data['addr']
+
+    if request.session['user_id'] != user_id:
+        return HttpResponse('Error2')
+
+    # 회원정보 조회 실패 시 예외 발생
+    try:
+        prev_pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
+        person = User.objects.get(user_id=user_id)
+
+        try:
+            if PasswordHasher().verify(prev_pw.encode(), curr_pw.encode()): # 패스워드 확인
+                person.pw = PasswordHasher().hash(new_pw)
+                person.username = username
+                person.email = email
+                person.addr = addr
+                person.save()
+                return HttpResponseRedirect('/main/')
+
+        except VerifyMismatchError as e: # 패스워드 틀린 사용자
+            return HttpResponse('Error1')
+
+    except User.DoesNotExist as e: # 없는 사용자
+        return HttpResponse('Error2')
+        
+    return JsonResponse(data)
+
+
+
+def del_myinfo(request):
+    obj = request.body.decode("utf-8")
+    data = json.loads(obj)
+    
+    user_id = data['user_id']
+    curr_pw = data['pw']
+
+
+    # 회원정보 조회 실패 시 예외 발생
+    try:
+        pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
+        person = User.objects.get(user_id=user_id)
+
+        try:
+            if PasswordHasher().verify(pw.encode(), curr_pw.encode()): # 패스워드 확인
+                person.delete()
+                request.session.flush() # 전체 삭제
+                #return HttpResponseRedirect('/main/')
+
+        except VerifyMismatchError as e: # 패스워드 틀린 사용자
+            return HttpResponse('Error1')
+
+    except User.DoesNotExist as e: # 없는 사용자
+        return HttpResponse('Error2')
+        
+    return JsonResponse(data)

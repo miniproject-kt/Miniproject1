@@ -67,8 +67,16 @@
                   </ul>
                   <ul class="nav-shop">
                   {% if request.session.user_id%}
-                  <li class="nav-item"><button onclick = "location.href='#';"> {{ request.session.username }}님 </button></li>
+                  <li class="nav-item submenu dropdown">
+                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                        aria-haspopup="true" aria-expanded="false"> {{ request.session.username }}님</a>
+                     <ul class="dropdown-menu">
+                        <li class="nav-item"><a class="nav-link" href="{% url  'member:mypage' %}">개인정보수정</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url  'app:mypage' %}">게시글</a></li>
+                     </ul>
+                  </li>
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:logout' %}">Logout</a></li>
+                  
                   {% else %}
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:login' %}">Login</a></li>
                   {% endif %}
