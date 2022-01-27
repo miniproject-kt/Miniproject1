@@ -31,14 +31,11 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
     'borrow',
-=======
     'app',
     'main',
     'postapp',
     'member',
->>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
