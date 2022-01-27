@@ -58,7 +58,7 @@ class Lender_Chatting(models.Model):
     l_chatting_index = models.AutoField(primary_key=True)
     posting_index = models.ForeignKey('Posting', on_delete = models.CASCADE, db_column="l_posting_index")
     lender_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
-    user_index = models.IntegerField()
+    user_index = models.CharField(max_length=20)
     object_num = models.IntegerField() 
     date = models.DateTimeField(auto_now_add=True)
     chatting =  models.TextField(null=True)

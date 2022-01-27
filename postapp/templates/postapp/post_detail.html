@@ -59,7 +59,7 @@
                     <td> <h1>{{result.title}}</h1> </td>
                   </tr>
                   <tr>
-                    <td style="text-align : right">{{result.date}}</td>
+                    <td style="text-align : right"> {{result.date}}</td>
                   </tr>
                   <tr>
                     <td> <img src = "{{ result.pic.url }}" class="img-responsive center-block" style="width:500px; height:500px;" alt onerror="this.src = '/static/img/object/0.png'"> </td>
@@ -91,12 +91,8 @@
               <td> 
                 <p><span class="glyphicon glyphicon-user"> </span>{{comment.user_index}}</p> 
                 <p> {{comment.chatting}} </p>
-                
-                {% comment %} 해당 댓글을 작성한 사용자만 해당 댓글 삭제 가능 {% endcomment %}
-                {% if request.session.user_id == comment.lender_index %}
-                    <a class ="link-secondary">삭제</a>
-                {% endif %}
                  <p class="text-secondary"> <small> {{comment.date}} </small> </p>
+                
               </td>
             </tr>
           {% endfor %}

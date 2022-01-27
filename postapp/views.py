@@ -33,7 +33,7 @@ def category(request):
     # 페이지 마지막 번호
     last_page_num = 0
     for last_page in p.page_range:
-        last_page_num = last_page + 1
+        last_page_num = last_page 
 
 
 
@@ -80,15 +80,19 @@ def detail(request, pk):
     if request.method == 'POST':
         comment = Lender_Chatting()
         comment.lender_index = User.objects.get(user_index = result.user_id)
-        comment.user_index = user.user_index
+        comment.user_index = request.session['user_id']
         comment.chatting = request.POST['body']
         comment.posting_index = Posting.objects.get(l_posting_index = pk)
         comment.object_num = pk
         comment.save()
 
     comments = Lender_Chatting.objects.filter(posting_index = pk)
-    context = {'result' : result, 'user' : user, 'comments' : comments}    
-    return render(request, 'postapp/post_detail.html', context)
+    context = {
+        'result' : result, 
+        'user' : user, 
+        'comments' : comments, 
+        }    
+    return render(request, 'postapp/post_detail.html/', context)
 
 
 def edit(request, pk):
@@ -102,7 +106,7 @@ def edit(request, pk):
         form = PostForm(instance=posting)
 
     return render(
-            request, 'postapp/post_edit.html', {'form':form, 'pk' : pk}
+            request, 'postapp/post_edit.html/', {'form':form, 'pk' : pk}
         )
 
 
@@ -110,5 +114,4 @@ def delete(request, pk):
     post = Posting.objects.get(l_posting_index = pk)
     post.delete()
     return redirect('/postapp/category')
-
 
