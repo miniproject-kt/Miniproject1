@@ -54,7 +54,7 @@
                 <div class="card text-center card-product">
                   <div class="card-product__img" >
                     <a href = "{% url 'detail' post.l_posting_index %}">
-                    <img class="card-img" src = "{{ post.pic.url }}" width="300"; height="300">
+                    <img class="card-img" src = "{{ post.pic.url }}" width="300"; height="300" alt onerror="this.src = '/static/img/object/0.png'">
                     </a>
                   </div>
                   <div class="card-body">
@@ -65,7 +65,7 @@
                 </div>
               </div>
               {% empty %}
-              <h1>존재하지않습니다</h1>
+              <h4 class ="text-center link-secondary">존재하지 않습니다</h4>
               {% endfor %}
             </div>
           </section>
