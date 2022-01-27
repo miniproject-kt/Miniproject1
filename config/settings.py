@@ -31,10 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
+    'borrow',
+=======
     'app',
     'main',
     'postapp',
     'member',
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,6 +83,40 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+<<<<<<< HEAD
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'custom': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'rental13',
+        'USER': 'rental13',
+        'PASSWORD': '220128',
+        'HOST': '13.125.52.234',
+        'PORT': 3306
+    }
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
+
+=======
         # 'default': {
         #     'ENGINE': 'django.db.backends.sqlite3',
         #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -97,6 +135,7 @@ DATABASES = {
 }
 
 DATABASE_ROUTERS = ['app.router.DBRouter']
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -136,11 +175,27 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'borrow', 'static')
+]
+=======
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 ) 
+<<<<<<< HEAD
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
+=======
 
 MEDIA_URL = '/media/'
 
 
+<<<<<<< HEAD
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+=======
+
+>>>>>>> 3aabb0173346c055a87fb182458a42e365a43a43
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+>>>>>>> 7157aa9c7f399f1ad35e39fcaac536820b87565a
+>>>>>>> 1953763a9f2002b2f4dbcaecda45f3935e44c284
