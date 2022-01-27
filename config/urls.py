@@ -22,6 +22,7 @@ from postapp import views
 from member import views
 
 urlpatterns = [
+    path('',include('member.urls')),
     path('admin/', admin.site.urls),
     #path('index/', views.index),
     #path('insert/', views.insert),

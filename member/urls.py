@@ -4,6 +4,7 @@ from . import views
 app_name = 'member'
 urlpatterns = [
     # 직접 구현
+    path('', views.login, name='login'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
 
