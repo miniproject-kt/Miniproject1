@@ -46,7 +46,7 @@
                   <div class="card-product__img">
                      <a href="/postapp/post/{{post.l_posting_index}}/">
                      {% if post.pic %}
-                        <img class="card-img2" src="{{post.pic}}" alt="" onerror="this.src = '/static/img/object/0.png'">
+                        <img class="card-img2" src="{{ post.pic.url }}" alt="" onerror="this.src = '/static/img/object/0.png'">
                      {% else %}
                         <img class="card-img2" src="/static/img/object/0.png" alt="">
                      {% endif %}
