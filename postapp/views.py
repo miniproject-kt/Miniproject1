@@ -12,6 +12,13 @@ def main(request):
     return render(request, 'postapp/blog.html')
 
 def category(request):
+    search_keyword = request.GET.get('q', '')
+
+    if search_keyword:
+        post_list = Posting.objects.filter(title__contains=search_keyword)
+    else:
+        post_list = Posting.objects.order_by('-l_posting_index')
+    
     now_page =int(request.GET.get('page', 1))
     post_list = Posting.objects.order_by('-l_posting_index')
                 # 포스트 , 보여줄 게시글 개수

@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/nice-select/nice-select.css' %}">
   <link rel="stylesheet" href="{% static 'vendors/nouislider/nouislider.min.css' %}">
-
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -126,7 +125,7 @@
 					<td>{{form.body}}</td>
 					</tr>
 				</table>
-				<div class="mx-auto">
+				<div class="col text-center">
 					<button type = "submit" class="btn btn-outline-secondary mx-auto">등록</button>
 					<button class="btn btn-outline-secondary">
 						<a href = "{% url 'category' %}">취소</a>
