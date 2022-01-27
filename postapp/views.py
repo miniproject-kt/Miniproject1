@@ -1,7 +1,7 @@
 # from http.client import HTTPResponse
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Posting
+from .models import Posting, User
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
@@ -51,7 +51,7 @@ def form_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             posting = form.save(commit=False)
-            posting.user_id = 5
+            posting.user_id = request.session['user_id']
             posting.save()
             
         return redirect('/postapp/category/')
@@ -66,6 +66,23 @@ def form_post(request):
 
 def detail(request, pk):
     result = get_object_or_404(Posting, l_posting_index = pk)
-    context = {'result' : result}
+    user = User.objects.get(user_index = result.user_id)
+    context = {'result' : result, 'user' : user}
     return render(request, 'postapp/post_detail.html', context)
 
+
+def edit(request, post_id):
+    posting = Posting.objects.get(l_posting_index = post_id)
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            posting = form.save()
+            
+        return redirect('/postapp/category/')
+    else:
+        form = PostForm()
+
+    return render(
+        request, 'postapp/form_post.html', {'form' : form}
+    )
