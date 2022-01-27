@@ -26,7 +26,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('',include('member.urls')),
     path('admin/', admin.site.urls),
-    path('borrow/', include('borrow.urls'))
+    path('borrow/', include('borrow.urls')),
     #path('index/', views.index),
     #path('insert/', views.insert),
     path('app/', include('app.urls')),
