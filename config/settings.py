@@ -83,40 +83,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    },
-    'custom': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'rental13',
-        'USER': 'rental13',
-        'PASSWORD': '220128',
-        'HOST': '13.125.52.234',
-        'PORT': 3306
-    }
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        }
-    },
-    'loggers': {
-        'django.db.backends': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-        },
-    }
-}
-
-
-=======
         # 'default': {
         #     'ENGINE': 'django.db.backends.sqlite3',
         #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -135,7 +101,6 @@ LOGGING = {
 }
 
 DATABASE_ROUTERS = ['app.router.DBRouter']
->>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
