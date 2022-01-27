@@ -9,10 +9,17 @@ from .models import Object
 from .models import User
 from django.utils import timezone
 import datetime
+from .models import Borrower, Lender, User
 
-def index(request):
-    
-    return render(request, 'app/maketable.html')
+def mypage(request):
+        
+    borrower = Borrower.objects.order_by('-b_posting_index')[:4]
+    lender = Lender.objects.order_by('-l_posting_index')[:4]
+    context = {
+      'borrower': borrower,
+      'lender': lender
+      }
+    return render(request, 'app/mypage.html',context)
 
 
 def insert(request):
@@ -22,7 +29,7 @@ def insert(request):
             user_id = 'iamsd',  
             email = 'afawefwe@gmail.com', 
             addr="경기도 성남시 분당구 불정로 90", 
-            pw='12345',
+            pw='1q2w3e4r',
             register_date=datetime.datetime(2015, 10, 8, 23, 55, 59, 342380)
             )
     user2 = User(
@@ -31,14 +38,16 @@ def insert(request):
             user_id = 'soqp', 
             email ='asdasds@gmail.com', 
             addr="경기도 성남시 분당구 이매1동" , 
-            pw='235234',register_date=datetime.datetime(2015, 10, 10, 23, 55, 59, 342380))
+            pw='235234',
+            register_date=datetime.datetime(2015, 10, 10, 23, 55, 59, 342380))
     user3 = User(
             user_index=3,
             username='A',
-            user_id = 'dbx', 
+            user_id = 'qwerqwer', 
             email ='afefewe@gmail.com', 
             addr = "경기도 성남시 분당구 야탑로 59", 
-            pw='235234',register_date=datetime.datetime(2015, 10, 11, 23, 55, 59, 342380))
+            pw='1q2w3e4r',
+            register_date=datetime.datetime(2015, 10, 11, 23, 55, 59, 342380))
     user4 = User(
             user_index=4, 
             username='B', 

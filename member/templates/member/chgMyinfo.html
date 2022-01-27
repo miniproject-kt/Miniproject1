@@ -2,12 +2,6 @@
 {% block content %}
 {% load humanize%}
     <style>
-        #check_id {
-            background-color: #b74b47; color: white;
-            border-radius: 4px;
-            transition-duration: 0.4s;
-            border: 2px solid #b74b47;
-        } /* Gray */
         #post_btn{
             margin-top: 5px;
             background-color: #b74b47; color: white;
@@ -31,35 +25,67 @@
             -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
             box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
         }
-
+        .startbanner{
+            height:150px
+        }
+        #new_submit{
+            height:40px;
+            margin-top: 5px;
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47; 
+        }
+        #del_submit{
+            height:40px;
+            margin-top: 5px;
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47; 
+        }
     </style>
 
 
+	<!-- ================ start banner area ================= -->
+	<section class="blog-banner-area startbanner" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>MyPage</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ================ end banner area ================= -->
     <!--================Login Box Area =================-->
     <section class="login_box_area" style = "margin-bottom: 120px">
                     <div class="container"> 
                         <div class="input-form-backgroud row"> 
                             <div class="input-form col-md-12 mx-auto"> 
-                                <h2 id='reg_title'>회원 가입</h2>
-                                <form class="validation-form" method = 'post' action="{% url 'member:register' %}" id="register_form">
+                                <h2 id='reg_title'>개인정보 수정</h2>
+                                <form class="validation-form" method = 'post' action="{% url 'member:chg_info' %}" id="chg_myinfo">
                                     {% csrf_token %}
                                     <div class="mb-3"> 
-                                        <label for="user_id">아이디</label> <span style="color: red">*</span><br>
-                                        <input type="text" class = "id_and_btn" id="user_id" name="user_id" 
-                                            style = "" placeholder="아이디를 입력해주세요."
-                                            onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'"> 
-                                    
-                                        <button id = 'check_id' >중복 확인</button>
+                                        <label for="user_id">아이디</label>
+                                        <input type="text" id="user_id" name="user_id"  class="form-control"
+                                            value = "{{request.session.user_id}}" disabled> 
                                     </div> 
                                     <div class="mb-3"> 
-                                        <label for="pw">비밀번호</label> <span style="color: red">*</span>
+                                        <label for="pw">비밀번호</label>
                                         <input type="password" class="form-control" id="pw" name="pw"
-                                        placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
-                                        onblur="this.placeholder = '비밀번호를 입력해주세요.'"> 
+                                        placeholder="현재 비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '현재 비밀번호를 입력해주세요.'"> 
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="pw">새 비밀번호</label>
+                                        <input type="password" class="form-control" id="new_pw" name="new_pw"
+                                        placeholder="새 비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '새 비밀번호를 입력해주세요.'"> 
                                         <div id = "valid_pw"></div>
                                     </div> 
                                     <div class="mb-3"> 
-                                        <label for="double_pw">비밀번호 확인</label> <span style="color: red">*</span>
+                                        <label for="double_pw">새 비밀번호 확인</label> 
                                         <input type="password" class="form-control" id="double_pw" name="double_pw"
                                         placeholder="비밀번호를 한번 더 입력해주세요." onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'"> 
@@ -67,29 +93,23 @@
                                         
                                     </div> 
                                     <div class="mb-3"> 
-                                        <label for="username">이름</label> <span style="color: red">*</span>
-                                        <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력해주세요."
-                                        onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
+                                        <label for="username">이름</label>
+                                        <input type="text" class="form-control" id="username" name="username" value = "{{request.session.username}}">
                                     </div> 
                                     <div class="mb-3"> 
-                                        <label for="email">이메일</label> <span style="color: red">*</span>
+                                        <label for="email">이메일</label>
                                         <input type="email" class="form-control" id="email" name="email"
                                         placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
                                         onblur="this.placeholder = '이메일을 입력해주세요.'">
                                         <div class="check_email" id="email_check"></div> <!-- email 형식이 맞는지 체크-->
                                     </div> 
-                                    {% comment %} <div class = 'mb-3'>
-                                        <label for="postid">우편번호</label> <span style="color: red">*</span>
-                                        <input type="text" id="sample6_postcode" placeholder="">
-                                        <button onclick="sample6_execDaumPostcode()" id = 'post_btn'>우편번호 찾기</button><br>
-                                    </div> {% endcomment %}
                                     <div class = 'mb-3'>
-                                        <label for="postid">우편번호</label> <span style="color: red">*</span><br>
-                                        <input type="text" id="postid" name="postid" placeholder="" disabled>
+                                        <label for="postid">우편번호</label><br>
+                                        <input type="text" id="postid" name="postid" placeholder="" disabled >
                                         <button id = 'post_btn'>우편번호 찾기</button><br>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="addr">주소</label> <span style="color: red">*</span>
+                                        <label for="addr">주소</label>
                                         <input type="text" class="form-control" id="addr" name="addr" placeholder=""><br>
 
                                         <label for="detail_addr">상세주소</label> <!--<span style="color: red">*</span>-->
@@ -100,14 +120,12 @@
 
                                     </div> 
                                     <div class="form-group">
-                                        <button type="submit" value="submit"
-                                            class="button button-register w-100" id = 'reg_submit'>가입</button>
+                                        <button type="submit" value="submit" id = 'new_submit' style="width: 45%; float: left;">수정</button>
+                                        <button type="submit" value="submit" id = 'del_submit' action="{% url 'member:chg_info' %}" style="width: 45%; float: right;">탈퇴하기</button>
                                     </div> 
                                 </form> 
                             </div> 
                         </div> 
-                        <footer class="my-3 text-center text-small"> <p class="mb-1">&copy; 2022 AI 1-3</p> 
-                        </footer> 
                     </div>
     </section>
     <!--================End Login Box Area =================-->
@@ -132,42 +150,6 @@
         }
     </script>
     <script>
-        // 아이디 중복 체크
-        document.querySelector("#check_id").addEventListener("click", (e) => {
-            e.preventDefault();
-
-            let user_id = document.querySelector("[name=user_id]").value;
-            
-            if (user_id == '') {
-                alert("ID를 입력해주세요.");
-            }
-            else if (user_id.length < 4){
-                alert("4자리 이상의 ID를 입력해주세요.");
-            }
-            else{
-                const csrftoken = getCookie('csrftoken');
-                const data = { 'user_id': user_id};
-                const ajax = axios({
-                    url: '/member/register/check/',
-                    method: 'post',
-                    data: JSON.stringify(data),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': csrftoken
-                    }
-                });
-                ajax.then(function (result) {
-                    if (result.data == '존재') {
-                        alert("사용 불가능한 ID입니다!");
-                    }
-                    else{
-                        alert("사용 가능한 ID입니다!");
-                    }
-                });
-            }
-        });
-
-
         // 이메일 유효성
         document.querySelector("[name=email]").addEventListener("keyup", (e) => {
     
@@ -189,9 +171,9 @@
 
 
         // 패스워드 유효성
-        document.querySelector("[name=pw]").addEventListener("keyup", (e) => {
+        document.querySelector("[name=new_pw]").addEventListener("keyup", (e) => {
             let corr_pw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-            let pw = document.querySelector("[name=pw]").value;
+            let pw = document.querySelector("[name=new_pw]").value;
             document.querySelector("#valid_pw").innerHTML = "";
 
             if (pw.length == 0){
@@ -211,7 +193,7 @@
         // 패스워드2 일치 여부
         document.querySelector("[name=double_pw]").addEventListener("keyup", (e) => {
             
-            let user_pw1 = document.querySelector("[name=pw]").value;
+            let user_pw1 = document.querySelector("[name=new_pw]").value;
             let user_pw2 = document.querySelector("[name=double_pw]").value;
             
             // 다른 키를 하나 더 눌러야 인식됨
@@ -225,28 +207,110 @@
             }
         });
 
-        // 모든 필드 입력 확인
-        document.querySelector("#reg_submit").addEventListener("click", (e) => {
+        // 수정 버튼
+        document.querySelector("#new_submit").addEventListener("click", (e) => {
             e.preventDefault();
 
             let username = document.querySelector("[name=username]").value;
             let user_id = document.querySelector("[name=user_id]").value;
             let email = document.querySelector("[name=email]").value;
-            let user_pw1 = document.querySelector("[name=pw]").value;
-            let user_pw2 = document.querySelector("[name=double_pw]").value;
+            let curr_pw = document.querySelector("[name=pw]").value;
+
+            let new_pw = document.querySelector("[name=new_pw]").value;
+            let double_pw = document.querySelector("[name=double_pw]").value;
             
             let postid = document.querySelector("[name=postid]").value;
             let addr = document.querySelector("[name=addr]").value;
             //let detail_addr = document.querySelector("[name=detail_addr]").value;
 
-            if (username == "" | user_id == "" | email == ""
-                | user_pw1 == "" | user_pw2 == "" | postid == "" ){//| detail_addr == ""){
+            const csrftoken = getCookie('csrftoken');
+			const data = { 'user_id': user_id, 'pw': curr_pw, 'new_pw': new_pw,
+                            'username':username, 'email':email, 'addr':addr};
+			const ajax = axios({
+				url: '/member/mypage/valid_myinfo/',
+				method: 'post',
+				data: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken
+				}
+			});
+
+			ajax.then(function (result) {
+				if (username == "" | user_id == "" | email == ""
+                | new_pw == "" | double_pw == "" | postid == "" | curr_pw == "" ){//| detail_addr == ""){
                     alert("모두 입력해주세요!");
-            }
-            else{
-                document.querySelector("#register_form").submit();
+                }
+				else if (result.data == 'Error1' | result.data == 'Error2' ) {
+					alert("아이디 또는 패스워드가 틀렸습니다.");
+                    document.querySelector("[name=email]").value= "";
+                    document.querySelector("[name=pw]").value= "";
+
+                    document.querySelector("[name=new_pw]").value= "";
+                    document.querySelector("[name=double_pw]").value= "";
+
+                    document.querySelector("[name=postid]").value= "";
+                    document.querySelector("[name=addr]").value= "";
+				}
+
+				else{
+					document.querySelector("#chg_myinfo").submit();
+				}
+			});
+
+        });
+
+        // 탈퇴 버튼
+        document.querySelector("#del_submit").addEventListener("click", (e) => {
+            e.preventDefault();
+
+
+
+            let user_id = document.querySelector("[name=user_id]").value;
+            let curr_pw = document.querySelector("[name=pw]").value;
+            
+            if (curr_pw == "" ){
+                alert("비밀번호를 입력해주세요.");
+                return;
             }
 
+            let isremove = confirm("정말 탈퇴하시겠습니까?");
+
+            if (!isremove){
+                return;
+            }
+
+
+            const csrftoken = getCookie('csrftoken');
+            const data = { 'user_id': user_id, 'pw': curr_pw};
+            const ajax = axios({
+                url: '/member/mypage/del_myinfo/',
+                method: 'post',
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }
+            });
+
+            ajax.then(function (result) {
+                if (result.data == 'Error1' | result.data == 'Error2' ) {
+                    alert("아이디 또는 패스워드가 틀렸습니다.");
+                    document.querySelector("[name=email]").value= "";
+                    document.querySelector("[name=pw]").value= "";
+
+                    document.querySelector("[name=new_pw]").value= "";
+                    document.querySelector("[name=double_pw]").value= "";
+
+                    document.querySelector("[name=postid]").value= "";
+                    document.querySelector("[name=addr]").value= "";
+                }
+
+                else{
+                    document.querySelector("#chg_myinfo").submit();
+                    
+                }
+            });
 
         });
 

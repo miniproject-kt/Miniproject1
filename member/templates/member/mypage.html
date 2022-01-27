@@ -1,0 +1,143 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+    <style>
+        #check_id {
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47;
+        } /* Gray */
+        #post_btn{
+            margin-top: 5px;
+            background-color: #b74b47; color: white;
+            border-radius: 4px;
+            transition-duration: 0.4s;
+            border: 2px solid #b74b47; 
+        }
+        #reg_title{
+            margin-bottom: 30px;
+        }
+
+        .input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+        .startbanner{
+            height:150px
+        }
+    </style>
+
+
+	<!-- ================ start banner area ================= -->
+	<section class="blog-banner-area startbanner" id="category">
+		<div class="container h-100">
+			<div class="blog-banner">
+				<div class="text-center">
+					<h1>MyPage</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- ================ end banner area ================= -->
+
+    <!--================Login Box Area =================-->
+    <section class="login_box_area" style = "margin-bottom: 120px">
+                    <div class="container"> 
+                        <div class="input-form-backgroud row"> 
+                            <div class="input-form col-md-12 mx-auto"> 
+                                <h2 id='reg_title'>개인정보 수정</h2>
+                                <form class="validation-form" method = 'post' action="{% url 'member:mypage' %}" id="mypage_form">
+                                    {% csrf_token %}
+                                    <div class="mb-3"> 
+                                        <label for="user_id">아이디</label><br>
+                                        <input type="text" class="form-control" id="user_id" name="user_id"
+                                        placeholder="아이디를 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '아이디를 입력해주세요.'"> 
+                                    </div> 
+                                    <div class="mb-3"> 
+                                        <label for="pw">비밀번호</label>
+                                        <input type="password" class="form-control" id="pw" name="pw"
+                                        placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = '비밀번호를 입력해주세요.'"> 
+                                    </div> 
+                                    <div class="form-group">
+                                        <button type="submit" value="submit"
+                                            class="button button-register w-100" id = 'chg_submit'>수정하기</button>
+                                    </div> 
+                                </form> 
+                            </div> 
+                        </div> 
+                    </div>
+    </section>
+    <!--================End Login Box Area =================-->
+
+
+    <!--================Start Register Script Area =================-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    <script>
+        // 모든 필드 입력 확인
+        document.querySelector("#chg_submit").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let user_id = document.querySelector("[name=user_id]").value;
+            let user_pw1 = document.querySelector("[name=pw]").value;
+            
+            const csrftoken = getCookie('csrftoken');
+			const data = { 'user_id': user_id, 'pw': user_pw1, };
+            const ajax = axios({
+                url: '/member/mypage/valid/',
+                method: 'post',
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken
+                }
+            });
+            ajax.then(function (result) {
+                if (user_id == "" | user_pw1 == "" ){
+                    alert("모두 입력해주세요!");
+                }
+                else{
+                    if (result.data == 'Error1' | result.data == 'Error2') {
+                        alert("아이디 또는 패스워드가 틀렸습니다.");
+                        document.querySelector("#pw").value = "";
+                        document.querySelector("#user_id").value = "";
+                    }
+                    else{
+                        document.querySelector("#mypage_form").submit();
+                    }
+                }
+            });
+        });
+        
+			
+
+    </script>
+
+    <!--================End Register Script Area =================-->
+    {% endblock %}

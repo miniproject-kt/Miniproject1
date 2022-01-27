@@ -8,6 +8,13 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
 
+    path('mypage/', views.mypage, name='mypage'),
+    path('mypage/chg_info/', views.chg_info, name='chg_info'),
+
+    path('mypage/valid/', views.valid_mypage, name = 'valid_mypage'),
+    path('mypage/valid_myinfo/', views.valid_myinfo, name = 'valid_myinfo'),
+    path('mypage/del_myinfo/', views.del_myinfo, name = 'del_myinfo'),
+
     path('register/', views.register, name='register'),
     path("register/check/", views.check_id, name = 'check_id'),
 
