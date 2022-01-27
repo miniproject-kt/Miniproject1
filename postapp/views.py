@@ -58,9 +58,12 @@ def form_post(request):
             object = Object()
             object.object_name = posting.title
             object.deposit = posting.deposit
-            # object.posting_index = posting.l_posting_index
-            return HttpResponse(posting.l_posting_index)
-        # return redirect('/postapp/category/')
+            object.category = posting.category
+            object.posting_index = Posting.objects.get(l_posting_index = posting.l_posting_index)
+            object.lender_index = posting.user_id
+            object.save()
+
+            return redirect('/postapp/category/')
     else:
         form = PostForm()
 
@@ -73,17 +76,18 @@ def form_post(request):
 def detail(request, pk):
     result = get_object_or_404(Posting, l_posting_index = pk)
     user = User.objects.get(user_index = result.user_id)
-    comments = Lender_Chatting.objects.filter(posting_index = pk)
-    context = {'result' : result, 'user' : user, 'comments' : comments}
 
     if request.method == 'POST':
         comment = Lender_Chatting()
-        comment.user_id = user.user_id
+        comment.lender_index = User.objects.get(user_index = result.user_id)
         comment.user_index = user.user_index
         comment.chatting = request.POST['body']
-        comment.l_posting_index = result.l_posting_index
+        comment.posting_index = Posting.objects.get(l_posting_index = pk)
+        comment.object_num = pk
         comment.save()
 
+    comments = Lender_Chatting.objects.filter(posting_index = pk)
+    context = {'result' : result, 'user' : user, 'comments' : comments}    
     return render(request, 'postapp/post_detail.html', context)
 
 
