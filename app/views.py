@@ -38,14 +38,16 @@ def insert(request):
             user_id = 'soqp', 
             email ='asdasds@gmail.com', 
             addr="경기도 성남시 분당구 이매1동" , 
-            pw='235234',register_date=datetime.datetime(2015, 10, 10, 23, 55, 59, 342380))
+            pw='235234',
+            register_date=datetime.datetime(2015, 10, 10, 23, 55, 59, 342380))
     user3 = User(
             user_index=3,
             username='A',
             user_id = 'qwerqwer', 
             email ='afefewe@gmail.com', 
             addr = "경기도 성남시 분당구 야탑로 59", 
-            pw='1q2w3e4r',register_date=datetime.datetime(2015, 10, 11, 23, 55, 59, 342380))
+            pw='1q2w3e4r',
+            register_date=datetime.datetime(2015, 10, 11, 23, 55, 59, 342380))
     user4 = User(
             user_index=4, 
             username='B', 

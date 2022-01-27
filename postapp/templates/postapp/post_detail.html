@@ -40,7 +40,6 @@
   <section class="section-margin--small mb-5">
     <div class="container">
       <div class="row">
-
         <div class="mx-auto col-xl-9 col-lg-8 col-md-7">
           <!-- Start Filter Bar -->
           <!-- End Filter Bar -->
@@ -49,6 +48,10 @@
             <div class="row" style="justify-content:center;">
               {% comment %} 게시판 시작 {% endcomment %}
               <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                {% if request.session.user_id == user.user_id %}
+                    <a href ="#" class ="link-secondary">수정</a>
+                    <a href ="/postapp/" class ="link-secondary">삭제</a>
+                {% endif %}
                 <a href="/postapp/category/" class="link-secondary">목록</a>
                 </a>
               </div>
