@@ -72,7 +72,6 @@ def login(request):
         request.session['username'] = m.username
 
         return render(request, 'main/main.html')
-        
     else:
         return render(request, 'member/login.html')
 
