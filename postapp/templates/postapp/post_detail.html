@@ -75,8 +75,20 @@
             </div>
           </section>
           <h1>comment</h1>
-          <textarea class="form-control" rows="3"></textarea> 
-          <button type="button" class="btn btn-default btn-lg float-right">등록</button>
+          <form method ="POST">
+            {% csrf_token %}
+          <textarea class="form-control" rows="3" name = "body"></textarea> 
+          <button type="submit" class="btn btn-default btn-lg float-right">등록</button>
+          </form>
+          <table class='table'>
+          {% for comment in comments %}
+            <tr>
+              <td> {{comment.user_id}} </td>
+              <td> {{comment.body}} </td>
+            </tr>
+          {% endfor %}
+          </table>
+
           <!-- End Best Seller -->
         </div>
       </div>

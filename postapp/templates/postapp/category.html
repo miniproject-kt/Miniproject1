@@ -33,9 +33,12 @@
         {% comment %} <h1 class ="text-center">Posting!</h1> {% endcomment %}
         <div class="mx-auto col-xl-9 col-lg-8 col-md-7">
           <section class="mx-auto lattest-product-area pb-40 category-list">
+            <form method="GET">
             <div class="mx-auto input-group mb-3" style="width:600px;">
-              <input type="text" class="form-control" placeholder="검색어를 입력하세요"  aria-describedby="button-addon2">
+              <input type="text" class="form-control" placeholder="검색어를 입력하세요"  aria-describedby="button-addon2" name="post">
+              <button type ="submit" class="btn btn-lg btn-default">검색</button>
             </div>
+          </form>
             {% if request.session.user_id%}
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
               <a href="{% url 'post' %}" class="link-secondary">글쓰기</a>
@@ -61,6 +64,8 @@
                   </div>
                 </div>
               </div>
+              {% empty %}
+              <h1>존재하지않습니다</h1>
               {% endfor %}
             </div>
           </section>

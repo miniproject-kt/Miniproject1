@@ -2,7 +2,8 @@
 from turtle import pos
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Posting, User
+from sympy import Q
+from .models import Posting, User, Lender_Chatting
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
@@ -13,15 +14,13 @@ def main(request):
     return render(request, 'postapp/blog.html')
 
 def category(request):
-    search_keyword = request.GET.get('q', '')
-
+    search_keyword = request.GET.get('post', '')
+    post_list = Posting.objects.all()
     if search_keyword:
-        post_list = Posting.objects.filter(title__contains=search_keyword)
-    else:
-        post_list = Posting.objects.order_by('-l_posting_index')
-    
+        post_list = post_list.filter(title__contains=search_keyword)
+
     now_page =int(request.GET.get('page', 1))
-    post_list = Posting.objects.order_by('-l_posting_index')
+    post_list = post_list.order_by('-l_posting_index')
                 # 포스트 , 보여줄 게시글 개수
     p = Paginator(post_list, 6)
     info = p.get_page(now_page)
@@ -69,23 +68,32 @@ def form_post(request):
 def detail(request, pk):
     result = get_object_or_404(Posting, l_posting_index = pk)
     user = User.objects.get(user_index = result.user_id)
-    context = {'result' : result, 'user' : user}
+    comments = Lender_Chatting.objects.filter(posting_index = pk)
+    context = {'result' : result, 'user' : user, 'comments' : comments}
+
+    if request.method == 'POST':
+        comment = Lender_Chatting()
+        comment.user_id = user.user_id
+        comment.user_index = user.user_index
+        comment.chatting = request.POST['body']
+        comment.posting_index = result.l_posting_index
+        comment.save()
+
     return render(request, 'postapp/post_detail.html', context)
 
 
 def edit(request, pk):
     posting = Posting.objects.get(l_posting_index = pk)
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
+        form = PostForm(request.POST, request.FILES, instance=posting)
         if form.is_valid():
-
             posting.save()
-            return redirect('/postapp/category/')
+            return redirect('detail', pk = pk)
     else:
         form = PostForm(instance=posting)
 
     return render(
-            request, 'postapp/post_edit.html', {'form' : form}
+            request, 'postapp/post_edit.html', {'form':form, 'pk' : pk}
         )
 
 
@@ -93,3 +101,5 @@ def delete(request, pk):
     post = Posting.objects.get(l_posting_index = pk)
     post.delete()
     return redirect('/postapp/category')
+
+

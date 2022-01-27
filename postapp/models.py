@@ -65,3 +65,17 @@ class Lender(models.Model):
         db_table = 'Lender_Post'
         app_label = 'postapp'
         managed = False
+
+
+class Lender_Chatting(models.Model):
+    l_chatting_index = models.AutoField(primary_key=True)
+    posting_index = models.ForeignKey('lender', on_delete = models.CASCADE, db_column="l_posting_index")
+    lender_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
+    user_index = models.IntegerField()
+    object_num = models.IntegerField() 
+    date = models.DateTimeField(auto_now_add=True)
+    chatting =  models.TextField(null=True)
+    class Meta:
+        db_table = 'Lender_Chatting'
+        app_label ='postapp'
+        managed = False
