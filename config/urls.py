@@ -30,6 +30,4 @@ urlpatterns = [
     path('main/', include('main.urls')),
     path('postapp/', include('postapp.urls')),
     path('member/', include('member.urls'))
-
-
 ]
