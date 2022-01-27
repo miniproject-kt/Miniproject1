@@ -38,6 +38,8 @@ def register(request):
         if pw == confirm_pw:
             m = User(user_id=user_id, pw=PasswordHasher().hash(pw), 
                             username=username, email = email,  addr = addr)# postid = postid, addr = addr, detail_addr = detail_addr)
+            m.register_date = timezone.now()
+            m.save()
             return render(request, 'main/main.html') # 회원가입 성공 후, 메인 페이지로 이동
     
     return render(request, 'member/register.html')
