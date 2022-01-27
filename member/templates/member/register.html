@@ -141,6 +141,9 @@
             if (user_id == '') {
                 alert("ID를 입력해주세요.");
             }
+            else if (user_id.length < 4){
+                alert("4자리 이상의 ID를 입력해주세요.");
+            }
             else{
                 const csrftoken = getCookie('csrftoken');
                 const data = { 'user_id': user_id};
@@ -187,15 +190,15 @@
 
         // 패스워드 유효성
         document.querySelector("[name=pw]").addEventListener("keyup", (e) => {
-            let corr_pw = /[a-zA-Z0-9]/;
+            let corr_pw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
             let pw = document.querySelector("[name=pw]").value;
             document.querySelector("#valid_pw").innerHTML = "";
 
             if (pw.length == 0){
                 document.querySelector("#valid_pw").innerHTML = "";
             }
-            else if(pw.length < 8 | pw.includes(" ") | !corr_pw.test(pw) ) {
-                document.querySelector("#valid_pw").innerHTML = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
+            else if(!corr_pw.test(pw) ) {
+                document.querySelector("#valid_pw").innerHTML = "* 비밀번호는 띄어쓰기 없이 최소 8 자, 숫자/문자/특수문자(@$!%*#?&)를 입력해주세요.";
                 document.querySelector("#valid_pw").style.color = 'red';
                 document.querySelector("#valid_pw").style.fontSize = '2px';
             }
