@@ -20,6 +20,8 @@ from app import views
 from main import views
 from postapp import views
 from member import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('',include('member.urls')),
@@ -31,3 +33,4 @@ urlpatterns = [
     path('postapp/', include('postapp.urls')),
     path('member/', include('member.urls'))
 ]
+urlpatterns +=static(settings.MEDIA_URL, document_root  = settings.MEDIA_ROOT)
