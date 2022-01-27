@@ -76,17 +76,16 @@ def detail(request, pk):
 def edit(request, pk):
     posting = Posting.objects.get(l_posting_index = pk)
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES, instance=posting)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            posting = form.save(commit=False)
+
             posting.save()
-            
             return redirect('/postapp/category/')
     else:
         form = PostForm(instance=posting)
 
-        return render(
-            request, 'postapp/form_post.html', {'form' : form}
+    return render(
+            request, 'postapp/post_edit.html', {'form' : form}
         )
 
 
