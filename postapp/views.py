@@ -1,7 +1,7 @@
 # from http.client import HTTPResponse
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from .models import Posting
+from .models import Lender
 from .forms import PostForm
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
@@ -11,7 +11,7 @@ def main(request):
     return render(request, 'postapp/blog.html')
 
 def category(request):
-    post_list = Posting.objects.all()
+    post_list = Lender.objects.all()
     return render(request, 'postapp/category.html', {'post_list' : post_list})
 
 
@@ -33,7 +33,7 @@ def form_post(request):
 
 
 def detail(request, pk):
-    result = get_object_or_404(Posting, board_id = pk)
+    result = get_object_or_404(Lender, board_id = pk)
     context = {'result' : result}
     return render(request, 'postapp/post_detail.html', context)
 

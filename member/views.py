@@ -30,6 +30,7 @@ def register(request):
         #     return 
 
         # 입력 이메일 형식이 잘못되었거나 이미 존재하는 메일인 경우,
+
         if User.objects.filter(email = email).exists():
             return HttpResponse("이미 가입된 이메일입니다.")
 
@@ -37,9 +38,6 @@ def register(request):
         if pw == confirm_pw:
             m = User(user_id=user_id, pw=PasswordHasher().hash(pw), 
                             username=username, email = email,  addr = addr)# postid = postid, addr = addr, detail_addr = detail_addr)
-            m.register_date = timezone.now()
-            m.save()
-
             return render(request, 'main/main.html') # 회원가입 성공 후, 메인 페이지로 이동
     
     return render(request, 'member/register.html')
@@ -63,8 +61,9 @@ def login(request):
     if request.method == 'POST':
         user_id = request.POST.get('user_id')
         pw = request.POST.get('pw')
-        
+
         corr_pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
+
         m = User.objects.get(user_id=user_id, pw=corr_pw)
 
         request.session['user_id'] = m.user_id

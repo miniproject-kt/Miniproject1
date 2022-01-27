@@ -127,6 +127,9 @@
                 </div>
               </div>
             </div>
+            <a href={% url 'post' %}>
+            <button type="button">Post</button>
+            </a>   
           </div>
           <!-- End Filter Bar -->
           <!-- Start Best Seller -->
@@ -138,13 +141,13 @@
               <div class="col-md-6 col-lg-4">
                 <div class="card text-center card-product">
                   <div class="card-product__img" >
-                    <a href = "{% url 'detail' post.board_id %}">
+                    <a href = "{% url 'detail' post.l_posting_index %}">
                     <img class="card-img" src = "{{ post.imgfile.url }}">
                     </a>
                   </div>
                   <div class="card-body">
-                    <p>{{post.board_id}}</p>
-                    <h4 class="card-product__title"><a>{{ post.board_title }}</a></h4>
+                    <p>{{post.l_posting_index}}</p>
+                    <h4 class="card-product__title"><a>{{ post.title }}</a></h4>
                     {% comment %} <p class="card-product__price">{{ post.board_content }}</p> {% endcomment %}
                   </div>
                 </div>
