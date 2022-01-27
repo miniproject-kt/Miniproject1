@@ -1,0 +1,116 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+<style>
+.card-img2 {
+   width: 275px;
+   height: 275px;
+   object-fit: cover;
+   border-radius:calc(1rem - 1px);
+}
+</style>   
+<main class="site-main">
+
+       <!--================ Hero banner start =================-->
+       <section class="hero-banner">
+         <div class="container">
+           <div class="row no-gutters align-items-center pt-60px">
+             <div class="col-5 d-none d-sm-block">
+               <div class="hero-banner__img">
+                 <img class="img-fluid" src="/static/img/home/hero-banner.png" alt="">
+               </div>
+             </div>
+             <div class="col-sm-7 col-lg-6 offset-lg-1 pl-4 pl-md-5 pl-lg-0">
+               <div class="hero-banner__content">
+                 <h4>물건을 공유하세요!</h4>
+                 <h1>[]로 이웃과 물건을 공유하세요</h1>
+                 <p>[]를 통해 이웃에게 필요한 물건을 빌리거나, 이웃에게 물건을 빌려주세요. 물건 공유를 통해 물건에 날개를 달아주세요!</p>
+                 <a class="button button-hero" href="#">지금 확인하기</a>
+               </div>
+             </div>
+           </div>
+         </div>
+       </section>
+       <!--================ Hero banner end =================-->
+
+   <!-- ================ 빌리기 section start ================= -->
+   <section class="section-margin calc-60px">
+      <div class="container">
+         <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">빌리기</span></h2>
+         </div>
+         <div class="row">
+            {% for post in lender %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+               <div class="card text-center card-product">
+                  <div class="card-product__img">
+                     <a href="/board/{{post.l_posting_index}}/">
+                     {% if post.pic %}
+                        <img class="card-img2" src="{{post.pic}}" alt="" onerror="this.src = '/static/img/object/0.png'">
+                     {% else %}
+                        <img class="card-img2" src="/static/img/object/0.png" alt="">
+                     {% endif %}
+                     </a>
+                     <!-- 추가할 수도 있음
+             <ul class="card-product__imgOverlay">
+               <li><button><i class="ti-search"></i></button></li>
+               <li><button><i class="ti-shopping-cart"></i></button></li>
+               <li><button><i class="ti-heart"></i></button></li>
+             </ul>
+             -->
+                  </div>
+                  <div class="card-body">
+                     <h4 class="card-product__title"><a href="/board/{{post.l_posting_index}}/">{{ post.title }}</a>
+                     </h4>
+                     <p class="card-product__price">{{ post.deposit|intcomma }}원</p>
+                     <p>{{ post.user.username }}</p>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+            <div class="card card-blog">
+            <a class="card-blog__link" href="/board">더보기 <i class="ti-arrow-right"></i></a>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- ================ 빌리기 section end ================= -->
+
+   <!-- ================ 요청하기 section start ================= -->
+   <section class="section-margin calc-60px">
+      <div class="container">
+         <div class="section-intro pb-60px">
+            <h2><span class="section-intro__style">요청하기</span></h2>
+         </div>
+         <div class="row">
+            {% for post in borrower %}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+               <div class="card text-center card-product">
+                  <div class="card-product__img">
+                     <a href="/board/{{post.b_posting_index}}/"><img class="card-img2" src="/static/img/object/0.png" alt=""></a>
+                     <!-- 추가할 수도 있음
+             <ul class="card-product__imgOverlay">
+               <li><button><i class="ti-search"></i></button></li>
+               <li><button><i class="ti-shopping-cart"></i></button></li>
+               <li><button><i class="ti-heart"></i></button></li>
+             </ul>
+             -->
+                  </div>
+                  <div class="card-body">
+                     <h4 class="card-product__title"><a href="/board/{{post.b_posting_index}}/">{{ post.title }}</a>
+                     </h4>
+                     <p>{{ post.user.username }}</p>
+                  </div>
+               </div>
+            </div>
+            {% endfor %}
+            <div class="card card-blog">
+               <a class="card-blog__link" href="/board">더보기 <i class="ti-arrow-right"></i></a>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- ================ 요청하기 section end ================= -->
+
+</main>
+{% endblock %}

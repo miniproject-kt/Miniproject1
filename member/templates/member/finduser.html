@@ -1,0 +1,114 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+
+    <style>
+        #find_result {
+            margin-top: 5px;
+            border: 3px;
+            font-size: 1em;
+            font-weight: bold;
+        } /* Gray */
+        .input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+    </style>
+
+
+    <!--================Login Box Area =================-->
+    <section class="login_box_area" style = "margin-bottom: 120px">
+        <div class="container">
+			<div class="input-form-backgroud row">
+				<div class="input-form col-md-12 mx-auto">
+					<div class="login_form_inner register_form_inner">
+                        <h2 style = "margin-bottom:20px">아이디 찾기</h2>
+                        <form class="row login_form" method = 'post' action="{% url 'member:find' %}" id="find_form">
+                            {% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="username" name="username" placeholder="이름을 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '이름을 입력해주세요.'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = '이메일을 입력해주세요.'">
+                                <div class="find_result" id="find_result"></div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <button type="submit" value="submit"
+                                    class="button button-register w-100" id = 'find_id'>아이디 찾기</button>
+                                <a href="{% url  'member:login' %}">로그인</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Login Box Area =================-->
+
+
+    <!--================Start Find Script Area =================-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    <script>
+        // 아이디 찾기 버튼 클릭
+        document.querySelector("#find_id").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let username = document.querySelector("[name=username]").value;
+            let email = document.querySelector("[name=email]").value;
+
+            if (email == '' | email == 'email' | username == '' | username == 'username') {
+                alert("정보를 입력해주세요!");
+            }
+            else{
+                const csrftoken = getCookie('csrftoken');
+                const data = { 'username': username, 'email': email};
+                const ajax = axios({
+                    url: '/member/login/find/userid/',
+                    method: 'post',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }
+                });
+                ajax.then(function (result) {
+                    if (result.data == '입력된 정보를 찾을 수 없습니다.') {
+                        alert("존재하지 않는 정보입니다.");
+                    }
+                    else{
+                        document.querySelector("#find_result").textContent = result.data;
+                    }
+                });
+            }
+        });
+    </script>
+    <!--================End Find Script Area =================-->
+
+	{% endblock %}

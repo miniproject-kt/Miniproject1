@@ -15,8 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+<<<<<<< HEAD
+=======
+from django.conf.urls import url
+from app import views
+from main import views
+from postapp import views
+from member import views
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
 
 urlpatterns = [
+    path('',include('member.urls')),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('borrow/', include('borrow.urls'))
+=======
+    #path('index/', views.index),
+    #path('insert/', views.insert),
+    path('app/', include('app.urls')),
+    path('main/', include('main.urls')),
+    path('postapp/', include('postapp.urls')),
+    path('member/', include('member.urls'))
+
+
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
 ]

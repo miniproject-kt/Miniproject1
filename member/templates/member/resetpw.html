@@ -1,0 +1,164 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+    <style>
+		.input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+	</style>
+    
+    <!--================Login Box Area =================-->
+    <section class="login_box_area" style = "margin-bottom: 120px">
+        <div class="container">
+			<div class="input-form-backgroud row">
+				<div class="input-form col-md-12 mx-auto">
+					<div class="login_form_inner register_form_inner">
+                        <h2 style = "margin-bottom:30px">비밀번호 재설정</h2>
+                        <form class="row login_form" method = 'post' action="{% url 'member:reset' %}" id="find_form">
+                            {% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="이메일을 입력해주세요." onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = '이메일을 입력해주세요.'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="user_pw" name="user_pw" placeholder="비밀번호를 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호를 입력해주세요.'">
+                                <div id="valid_pw"></div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="password" class="form-control" id="confirm_pw" name="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요."
+                                    onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호를 한번 더 입력해주세요.'">
+                                    <div id="pw_check"></div>
+                            </div>
+
+                            <div class="col-md-12 form-group">
+                                <button type="submit" value="submit"
+                                    class="button button-register w-100" id = 'reset_pw'>비밀번호 재설정</button>
+                                <a href="{% url  'member:login' %}">로그인</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Login Box Area =================-->
+
+
+    <!--================Start Find Script Area =================-->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    <script>
+        // 패스워드2 일치 여부
+        document.querySelector("[name=confirm_pw]").addEventListener("keyup", (e) => {
+            
+            let user_pw1 = document.querySelector("[name=user_pw]").value;
+            let user_pw2 = document.querySelector("[name=confirm_pw]").value;
+            
+            // 다른 키를 하나 더 눌러야 인식됨
+            if(user_pw1 == user_pw2) {
+                document.querySelector("#pw_check").textContent = "";
+            }
+            else{
+                document.querySelector("#pw_check").textContent = "* 비밀번호가 일치하지 않습니다.";
+                document.querySelector("#pw_check").style.color = 'red';
+                document.querySelector("#pw_check").style.fontSize = '2px';
+            }
+        });
+        // 패스워드 유효성
+        document.querySelector("[name=user_pw]").addEventListener("keyup", (e) => {
+            let corr_pw = /[a-zA-Z0-9]/;
+            let pw = document.querySelector("[name=user_pw]").value;
+            document.querySelector("#valid_pw").textContent = "";
+
+            if (pw.length == 0){
+                document.querySelector("#valid_pw").textContent = "";
+            }
+            else if(pw.length < 8 | pw.includes(" ") | !corr_pw.test(pw) ) {
+                document.querySelector("#valid_pw").textContent = "* 비밀번호는 8자리 이상, 숫자와 문자를 섞어주세요.";
+                document.querySelector("#valid_pw").style.color = 'red';
+                document.querySelector("#valid_pw").style.fontSize = '2px';
+            }
+            else{
+                document.querySelector("#valid_pw").textContent = "";
+            }
+        });
+
+        // 비밀번호 재설정 버튼 클릭
+        document.querySelector("#reset_pw").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            let user_id = document.querySelector("[name=user_id]").value;
+            let email = document.querySelector("[name=email]").value;
+            let user_pw = document.querySelector("[name=user_pw]").value;
+            let confirm_pw = document.querySelector("[name=confirm_pw]").value;
+
+            if (email == '' | user_id == '' | user_pw == '' | confirm_pw == '') {
+                alert("정보를 입력해주세요!");
+            }
+            else{
+                const csrftoken = getCookie('csrftoken');
+                const data = { 'pw': user_pw, 'user_id':user_id, 'email': email};
+                const ajax = axios({
+                    url: '/member/login/reset/userpw/',
+                    method: 'post',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    }
+                });
+                ajax.then(function (result) {
+                    if (result.data == '입력된 정보를 찾을 수 없습니다.') {
+                        alert("존재하지 않는 정보입니다.");
+                        document.querySelector("#user_id").value = "";
+                        document.querySelector("#email").value = "";
+                        document.querySelector("#user_pw").value = "";
+                        document.querySelector("#confirm_pw").value = "";
+                        document.querySelector("#valid_pw").textContent = "";
+                        document.querySelector("#pw_check").textContent = "";
+                    }
+                    else{
+                        alert(result.data);
+                        document.querySelector("#user_id").value = "";
+                        document.querySelector("#email").value = "";
+                        document.querySelector("#user_pw").value = "";
+                        document.querySelector("#confirm_pw").value = "";
+                        document.querySelector("#valid_pw").textContent = "";
+                        document.querySelector("#pw_check").textContent = "";
+                    }
+                });
+            }
+        });
+    </script>
+    <!--================End Find Script Area =================-->
+    {% endblock %}

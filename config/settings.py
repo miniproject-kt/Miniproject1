@@ -31,13 +31,21 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     'borrow',
+=======
+    'app',
+    'main',
+    'postapp',
+    'member',
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +63,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR + '/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,6 +83,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
+<<<<<<< HEAD
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
@@ -107,6 +116,26 @@ LOGGING = {
 }
 
 
+=======
+        # 'default': {
+        #     'ENGINE': 'django.db.backends.sqlite3',
+        #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # },
+    'default' :{
+        'ENGINE' : 'django.db.backends.mysql',
+        'NAME' : 'rental13',
+        'USER' : 'rental13',
+        'PASSWORD': '220128',
+        'HOST' : '13.125.52.234',
+        'PORT' : 3306,
+        'OPTIONS': {
+        'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
+    }
+}
+
+DATABASE_ROUTERS = ['app.router.DBRouter']
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -146,7 +175,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'borrow', 'static')
 ]
+=======
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+) 
+>>>>>>> c53896f83341c69f90fa6d75f33101e801205c95

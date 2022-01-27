@@ -1,0 +1,132 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>사이트 이름</title>
+   {% load static %}
+   <link rel="icon" href="{% static 'img/Fevicon.png' %}" type="image/png">
+   <link rel="stylesheet" href="{% static 'vendors/bootstrap/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'vendors/fontawesome/css/all.min.css' %}">
+   <link rel="stylesheet" href="{% static 'vendors/themify-icons/themify-icons.css' %}">
+   <link rel="stylesheet" href="{% static 'vendors/nice-select/nice-select.css' %}">
+   <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.theme.default.min.css' %}">
+   <link rel="stylesheet" href="{% static 'vendors/owl-carousel/owl.carousel.min.css' %}">
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+   <!--================ Start Header Menu Area =================-->
+   <header class="header_area">
+      <div class="main_menu">
+         <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container">
+               <a class="navbar-brand logo_h" href="/main/"><img src="{% static 'img/logo.png' %}" alt=""></a>
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+               </button>
+               <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+                  <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
+                     <!-- nav-item active -->
+                     <li class="nav-item"><a class="nav-link" href="/board/">빌리기</a></li>
+                     <li class="nav-item"><a class="nav-link" href="/board/">요청하기</a></li>
+                     <!-- <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Shop</a>
+                        <ul class="dropdown-menu">
+                           <li class="nav-item"><a class="nav-link" href="category.html">Shop Category</a></li>
+                           <li class="nav-item"><a class="nav-link" href="single-product.html">Product Details</a></li>
+                           <li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
+                           <li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+                           <li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+                        </ul>
+                     </li>
+                     <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Blog</a>
+                        <ul class="dropdown-menu">
+                           <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                           <li class="nav-item"><a class="nav-link" href="single-blog.html">Blog Details</a></li>
+                        </ul>
+                     </li>
+                     <li class="nav-item submenu dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-haspopup="true" aria-expanded="false">Pages</a>
+                        <ul class="dropdown-menu">
+                           <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+                           <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+                           <li class="nav-item"><a class="nav-link" href="tracking-order.html">Tracking</a></li>
+                        </ul>
+                     </li>
+                     <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li> -->
+                  </ul>
+
+                  <ul class="nav-shop">
+                     <!-- <li class="nav-item"><button><i class="ti-search"></i></button></li>
+                     <li class="nav-item"><button><i class="ti-shopping-cart"></i><span
+                              class="nav-shop__circle">3</span></button> </li> -->
+                     {% if request.session.user_id%}
+                        <li class="nav-item"><button onclick = "location.href='#';">{{ request.session.username }}님<i class="ti-user"></i></button></li>
+                     {% else %}
+                        <li class="nav-item"><a class="button button-header" href="{% url  'member:login' %}">Login</a></li>
+                     {% endif %}
+                  </ul>
+               </div>
+            </div>
+         </nav>
+      </div>
+   </header>
+   <!--================ End Header Menu Area =================-->
+   <!-- 기본 템플릿 안에 삽입될 내용 Start -->
+   {% block content %}
+   {% endblock %}
+   <!-- 기본 템플릿 안에 삽입될 내용 End -->
+
+   <!--================ Start footer Area  =================-->
+   <footer class="footer">
+      <div class="footer-bottom">
+         <div class="container">
+            <div class="row d-flex">
+                        
+               <p class="col-lg-12 footer-text text-center">
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  Copyright &copy;
+                  <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
+                  with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                     target="_blank">Colorlib</a>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  <p class="col-lg-12 footer-text text-center">
+                     <span class="fa fa-location-arrow"></span>
+                     Head Office: 경기도 성남시 분당구 불정로 90 (정자동)</p>
+
+                  <p class="col-lg-12 footer-text text-center">
+                     <span class="fa fa-phone"></span>
+                     Phone Number: 031-XXX-XXXX
+                  </p>
+                  <p class="col-lg-12 footer-text text-center">
+                     <span class="fa fa-envelope"></span>
+                     Email: help@aivel.kt.co.kr
+                  </p>
+               </p>
+            </div>
+         </div>
+      </div>
+   </footer>
+   <!--================ End footer Area  =================-->
+
+   <script src="{% static 'vendors/jquery/jquery-3.2.1.min.js' %}"></script>
+   <script src="{% static 'vendors/bootstrap/bootstrap.bundle.min.js' %}"></script>
+   <script src="{% static 'vendors/skrollr.min.js' %}"></script>
+   <script src="{% static 'vendors/owl-carousel/owl.carousel.min.js' %}"></script>
+   <script src="{% static 'vendors/nice-select/jquery.nice-select.min.js' %}"></script>
+   <script src="{% static 'vendors/jquery.ajaxchimp.min.js' %}"></script>
+   <script src="{% static 'vendors/mail-script.js' %}"></script>
+   <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

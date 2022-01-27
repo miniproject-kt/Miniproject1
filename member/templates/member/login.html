@@ -1,0 +1,133 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% load humanize%}
+	<style>
+		.startbanner{
+            height:150px
+        }
+
+		.input-form { 
+            max-width: 680px; 
+            margin-top: 80px; 
+            padding: 32px; 
+            background: #fff; 
+            -webkit-border-radius: 10px; 
+            -moz-border-radius: 10px; 
+            border-radius: 10px; 
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15); 
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15) 
+        }
+	</style>
+
+	<!--================Login Box Area =================-->
+	<section class="login_box_area" style = "margin-bottom: 120px">
+		<div class="container">
+			<div class="input-form-backgroud row">
+				<div class="input-form col-md-12 mx-auto">
+					<div class="login_form_inner">
+						<h2 style = "margin-bottom:20px">로그인</h2>
+						<form method='post' action="{% url 'member:login' %}">
+							{% csrf_token %}
+							<div class="col-md-12 form-group">
+								<input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해주세요."
+									onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디를 입력해주세요.'">
+							</div>
+							<div class="col-md-12 form-group">
+								<input type="password" class="form-control" id="pw" name="pw"
+									placeholder="비밀번호를 입력해주세요." onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '비밀번호를 입력해주세요.'">
+							</div>
+							{% comment %} <div class="col-md-12 form-group">
+								<div class="creat_account">
+									<input type="checkbox" id="f-option2" name="selector">
+									<label for="f-option2">Keep me logged in</label>
+								</div>
+							</div> {% endcomment %}
+							<div class="col-md-12 form-group">
+								<button type="submit" value="submit" class="button button-login w-100" 
+									style = "margin-bottom:20px" id='login_submit'>Log In</button>
+								<a href="{% url  'member:find' %}">아이디 찾기</a><span> | </span>
+								<a href="{% url  'member:reset' %}">비밀번호 재설정</a><span> | </span>
+								<a href="{% url  'member:register' %}">회원가입</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Login Box Area =================-->
+
+
+	<!--================ Start Login Script Area  =================-->
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+	<script>
+		// 아이디 중복 체크
+		document.querySelector("#login_submit").addEventListener("click", (e) => {
+			e.preventDefault();
+	
+			let userId = document.querySelector("[name=user_id]").value;
+			let userPw = document.querySelector("[name=pw]").value;
+	
+			// const data = axios({
+			// 		url: '/member/login/valid/',
+			// 		method: 'GET',
+			// 		params: {
+			// 			'user_id':userId,
+			// 			'pw': userPw,
+			// 		},
+			// 	});
+	
+			// data.then(function (result) {
+			// 	console.log(result.data)
+			// 	if (result.data == 'Error1' | result.data == 'Error2') {
+			// 		alert("아이디 또는 패스워드가 틀렸습니다.");
+			// 	}
+			// 	else{
+			// 		document.querySelector("form").submit();
+			// 	}
+			// });
+
+			const csrftoken = getCookie('csrftoken');
+			const data = { 'user_id': userId, 'pw': userPw, };
+			const ajax = axios({
+				url: '/member/login/valid/',
+				method: 'post',
+				data: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-CSRFToken': csrftoken
+				}
+			});
+			ajax.then(function (result) {
+				console.log(result.data)
+				if (result.data == 'Error1' | result.data == 'Error2') {
+					alert("아이디 또는 패스워드가 틀렸습니다.");
+					document.querySelector("#pw").value = "";
+				}
+				else{
+					document.querySelector("form").submit();
+				}
+			});
+		});
+	</script>
+
+	<!--================End Login Script Area =================-->
+	{% endblock %}

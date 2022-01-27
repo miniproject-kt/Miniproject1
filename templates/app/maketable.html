@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>DBDBDIP</title>
+</head>
+<body>
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>DB Table</title>
+      
+
+
+    </head>
+    <body>
+      <div>User Table</div>
+      <table>
+        <thead>
+          <tr>
+            <th>user_Index</th>
+            <th>username</th>
+            <th>user_id</th>
+            <th>pw</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>Maria Anders</td>
+            <td>iamsd</td>
+            <td>12345</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Francisco Chang</td>
+            <td>soqp</td>
+            <td>64347</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Han</td>
+            <td>sij62222</td>
+            <td>123141213</td>
+          </tr>
+        </thead>
+      </table>
+
+      <div>Lender Table</div>
+      <table>
+        <thead>
+          <tr>
+            <th>posting_index</th>
+            <th>user_index</th>
+            <th>title</th>
+            <th>body</th>
+            <th>rental fee</th>
+            <th>longitude</th>
+            <th>latitude</th>
+            <th>object_num</th>
+            <th>pic</th>
+            <td>date</td>
+
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>드라이버</td>
+            <td>드라이버 좀 빌려줄게</td>
+            <td>300</td>
+            <td>32.1</td>
+            <td>123.6</td>
+            <td>1</td>
+            <td>/static/img/object/1.jpg</td>
+            <td>2022/01/22/14:00</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>3</td>
+            <td>우산</td>
+            <td>우산 좀 빌려줄게</td>
+            <td>200</td>
+            <td>32.134</td>
+            <td>122.612</td>
+            <td>2</td>
+            <td>/static/img/object/2.jpg</td>
+            <td>2022/01/23/16:00</td>
+
+          </tr>
+        </thead>
+      </table>
+
+      <div>Borrower Table</div>
+      <table>
+        <thead>
+          <tr>
+            <th>posting_index</th>
+            <th>user_index</th>
+            <th>title</th>
+            <th>body</th>
+            <th>longitude</th>
+            <th>latitude</th>
+            <td>date</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>테이프</td>
+            <td>테이프 좀 빌려줘</td>
+            <td>32.1</td>
+            <td>123.6</td>
+            <td>2022/01/24/14:45</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>3</td>
+            <td>맥북 충전기</td>
+            <td>맥북 충전기 좀 빌려줘ㅠ.ㅠ</td>
+            <td>32.134</td>
+            <td>122.612</td>
+            <td>2022/01/24/14:46</td>
+          </tr>
+        </thead>
+      </table>
+
+      <div>Chat(댓글) Table</div>
+      <table>
+        <thead>
+          <tr>
+            <th>posting_index</th>
+            <th>lender_index</th>
+            <th>user_index</th>
+            <th>object_num</th>
+            <th>date</th>
+            <th>chatting</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>1</td>
+            <td>2022/01/24/14:00</td>
+            <td>드라이버 빌려주셈</td>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>1</td>
+            <td>2022/01/24/14:05</td>
+            <td>싫어 넌 멀어</td>
+          </tr>
+        </thead>
+      </table>
+
+
+      <div>Object Table</div>
+      <table>
+        <thead>
+          <tr>
+            <th>object_index</th>
+            <th>object_name</th>
+            <th>borrower_index</th>
+            <th>posting_index</th>
+            <th>rental fee</th>
+            <th>longitude</th>
+            <th>latitude</th>
+            <th>lender_index</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>드라이버</td>
+            <td>null</td>
+            <td>1</td>
+            <td>300</td>
+            <td>32.1</td>
+            <td>123.6</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>우산</td>
+            <td>3</td>
+            <td>2</td>
+            <td>200</td>
+            <td>32.134</td>
+            <td>122.612</td>
+            <td>3</td>
+          </tr>
+        </thead>
+      </table>
+
+
+  </body>
+</html>
+</body>
+</html>

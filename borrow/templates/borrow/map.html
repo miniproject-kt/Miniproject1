@@ -142,7 +142,7 @@
         <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=56cf2129d5728bdc9a601f3775753eb6&libraries=services"></script>
 
         <script>
-        navigator.geolocation.getCurrentPosition(success, fail)    
+        navigator.geolocation.getCurrentPosition(success, fail)     // 웹브라우저가 geolocation을 지원하는 경우
 
         function success(location) {
             
@@ -181,7 +181,7 @@
               geocoder.addressSearch(addresses[i], callback = (result, status) => {
 
                 if (status === kakao.maps.services.Status.OK) {
-                  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);     // 지번 주소명인 경우 예외처리 필요
   
                   var marker = new kakao.maps.Marker({
                     map: map,
@@ -198,9 +198,6 @@
                   kakao.maps.event.addListener(marker, 'click', clickListener(postId))
                   kakao.maps.event.addListener(marker, 'mouseover', mouseoverListener(map, marker, infowindow))
                   kakao.maps.event.addListener(marker, 'mouseout', mouseoutListener(infowindow))
-                  
-                  
-                  
                 }
               })
             }
@@ -209,7 +206,7 @@
             clickListener = (postId) => {
               return () => {
                 console.log(postId)
-                window.location.href = "http://127.0.0.1:8000/borrow/posting/"
+                window.location.href = "http://127.0.0.1:8000/borrow/posting/"    // postId를 넘겨받아 해당 페이지 이동
               }
             }
 
@@ -228,7 +225,7 @@
             
             nowLatitue = location.coords.latitude
             nowLongitude = location.coords.longitude
-            map.setCenter(new kakao.maps.LatLng(nowLatitue, nowLongitude))
+            map.setCenter(new kakao.maps.LatLng(nowLatitue, nowLongitude))    // 웹브라우저마다 좌표가 조금 다름
         }
 
         function fail(error) {

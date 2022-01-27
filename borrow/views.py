@@ -11,8 +11,8 @@ from django.forms.models import model_to_dict
 
 def getMap(request):
     
-    if request.method == 'POST':
-        param = request.POST.get('stuff', '사람')
+    if request.method == 'POST' and request.POST.get('stuff') != '':
+        param = request.POST.get('stuff')
 
         stuffQuerySet = Stuff.objects.filter(name__contains=param)
 
