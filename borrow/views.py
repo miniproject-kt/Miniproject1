@@ -1,7 +1,9 @@
 from django.http import HttpResponse
-from django.shortcuts import render
-from .models import Object, Borrower, User
+from django.shortcuts import render, redirect
+from .models import Object, Borrower, User, Borrower_Chatting
 from django.core.paginator import Paginator
+from .forms import PostForm
+from django.shortcuts import get_object_or_404
 
 
 def category(request):
@@ -34,6 +36,55 @@ def category(request):
         'last_page_num' : last_page_num
     }
     return render(request, 'borrow/category.html', context)
+
+
+
+def form_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            posting = form.save(commit=False)
+            user = User.objects.get(user_id = request.session['user_id'])
+            posting.user_id = user.user_index
+            posting.save()
+
+            object = Object()
+            object.object_name = posting.title
+            object.category = posting.category
+            object.posting_index = Borrower.objects.get(b_posting_index = posting.b_posting_index)
+            object.lender_index = posting.user_id
+            object.save()
+
+            return redirect('/borrow/category/')
+    else:
+        form = PostForm()
+
+    return render(
+        request, 'borrow/form_post.html', {'form' : form}
+    )
+
+
+
+def detail(request, pk):
+    result = get_object_or_404(Borrower, b_posting_index = pk)
+    user = User.objects.get(user_index = result.user_id)
+
+    if request.method == 'POST':
+        comment = Borrower_Chatting()
+        comment.borrower_index = User.objects.get(user_index = result.user_id)
+        comment.user_index = request.session['user_id']
+        comment.chatting = request.POST['body']
+        comment.posting_index = Borrower.objects.get(b_posting_index = pk)
+      # comment.object_num = pk
+        comment.save()
+
+    comments = Borrower_Chatting.objects.filter(posting_index = pk)
+    context = {
+        'result' : result, 
+        'user' : user, 
+        'comments' : comments, 
+        }    
+    return render(request, 'borrow/post_detail.html/', context)
 
 
 
