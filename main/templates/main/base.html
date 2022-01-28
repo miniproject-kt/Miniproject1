@@ -33,8 +33,9 @@
                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                   <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
                      <!-- nav-item active -->
+                     <li class="nav-item"><a class="nav-link" href="/borrow/map/">우리동네 물건</a></li>
                      <li class="nav-item"><a class="nav-link" href="/postapp/category/">빌리기</a></li>
-                     <li class="nav-item"><a class="nav-link" href="/board/">요청하기</a></li>
+                     <li class="nav-item"><a class="nav-link" href="/borrow/category/">요청하기</a></li>
                      <!-- <li class="nav-item submenu dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-haspopup="true" aria-expanded="false">Shop</a>
@@ -64,8 +65,7 @@
                         </ul>
                      </li>
                      <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li> -->
-                  </ul>
-                  <ul class="nav-shop">
+                  
                   {% if request.session.user_id%}
                   <li class="nav-item submenu dropdown">
                      <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
@@ -75,9 +75,13 @@
                         <li class="nav-item"><a class="nav-link" href="{% url  'app:mypage' %}">게시글</a></li>
                      </ul>
                   </li>
+               </ul>
+               <ul class="nav-shop">
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:logout' %}">Logout</a></li>
                   
                   {% else %}
+               </ul>
+               <ul class="nav-shop">
                   <li class="nav-item"><a class="button button-header" href="{% url  'member:login' %}">Login</a></li>
                   {% endif %}
                   </ul>
