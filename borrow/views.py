@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Object
+from .models import Lender
 
 
 def getMap(request):
@@ -7,16 +7,12 @@ def getMap(request):
     if request.method == 'POST' and request.POST.get('stuff') != '':
         param = request.POST.get('stuff')
 
-        stuffQuerySet = Object.objects.filter(object_name__contains=param)
+        postQuerySet = Lender.objects.filter(title__contains=param)
 
-        stuffs = []
         members = []
         posts = []
-        for stuff in stuffQuerySet:
+        for post in postQuerySet:
 
-            stuffs.append(stuff)
-
-            post = stuff.posting_index
             posts.append(post)
 
             member = post.lender_index
@@ -24,9 +20,8 @@ def getMap(request):
 
 
         data = {
-            'members': members,
-            'stuffs': stuffs,
-            'posts': posts
+            'posts': posts,
+            'members': members
         }
 
         return render(request, 'borrow/map.html', data)
