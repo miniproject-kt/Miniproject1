@@ -51,19 +51,11 @@
                         <img class="card-img2" src="/static/img/object/0.png" alt="">
                      {% endif %}
                      </a>
-                     <!-- 추가할 수도 있음
-             <ul class="card-product__imgOverlay">
-               <li><button><i class="ti-search"></i></button></li>
-               <li><button><i class="ti-shopping-cart"></i></button></li>
-               <li><button><i class="ti-heart"></i></button></li>
-             </ul>
-             -->
                   </div>
                   <div class="card-body">
                      <h4 class="card-product__title"><a href="/postapp/post/{{post.l_posting_index}}/">{{ post.title }}</a>
                      </h4>
                      <p class="card-product__price">{{ post.deposit|intcomma }}원</p>
-                     <p>{{ post.lender_index.username }}</p>
                   </div>
                </div>
             </div>

@@ -1,55 +1,71 @@
 {% extends 'main/base.html' %}
 {% block content %}
+{% load humanize%}
+<style>
+  .card-img2 {
+     width: 275px;
+     height: 275px;
+     object-fit: cover;
+     border-radius:calc(1rem - 1px);
+  }
+</style>
 
 <main class="site-main">
-	<section class="" id="contact">
+	<section class="blog-banner-area" id="contact">
 		<div class="container h-100" >
 			<div class="blog-banner">
 				<div class="text-center" >
           <div>
 					<h1>My Page</h1>
 					<nav >
-            <ul style="text-align:left;">
-              <li><h3>ID: {{request.session.user_id}}</h3></li>
-              <li><h3>Name: {{request.session.username}}</h3></li>
+            <ul>
+              <li>ID: {{request.session.user_id}}</li>
+              <li>Name: {{request.session.username}}</li>
             </ul>
           </nav>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="" id="contact">
+    <div class="container h-100">
+      <div class="blog-banner">
+        <div class="text-center">
           <div class="section-intro pb-100px">
             <h2><span class="section-intro__style">내 포스팅</span></h2>
-         </div>
+          </div>
           <hr class="solid">
           <div class="row">
             {% for post in lender %}
-              {% if request.session.user_index == post.lender_index.user_index%}
-              <div class="col-md-6 col-lg-4 col-xl-3">
-                <div class="card text-center card-product">
-                    <div class="card-product__img">
-                      <a href="/postapp/post/{{post.l_posting_index}}/">
-                      {% if post.pic %}
-                        <img class="card-img2" src="/media/{{ post.pic }}" alt="" onerror="this.src = '/static/img/object/0.png'" width="200" height="200">
-                      {% else %}
-                          <img class="card-img2" src="/static/img/object/0.png" alt="">
-                      {% endif %}
-                      </a>
-                    </div>
-                    <div class="card-body">
-                      <h4 class="card-product__title"><a href="/postapp/post/{{post.l_posting_index}}/">{{ post.title }}</a>
-                      </h4>
-                      <p class="card-product__price">{{ post.deposit}}원</p>
-                      <p>{{ post.user.username }}</p>
-                    </div>
+            {% if request.session.user_index == post.lender_index.user_index%}
+            <div class="col-md-6 col-lg-4 col-xl-3">
+              <div class="card text-center card-product">
+                <div class="card-product__img">
+                  <a href="/postapp/post/{{post.l_posting_index}}/">
+                    {% if post.pic %}
+                    <img class="card-img2" src="/media/{{ post.pic }}" alt=""
+                      onerror="this.src = '/static/img/object/0.png'" width="200" height="200">
+                    {% else %}
+                    <img class="card-img2" src="/static/img/object/0.png" alt="">
+                    {% endif %}
+                  </a>
+                </div>
+                <div class="card-body">
+                  <h4 style="color: black">{{ post.title }}</h4>
+                  </h4>
+                  <p class="card-product__price">{{ post.deposit|intcomma}}원</p>
+                  <p>{{ post.user.username }}</p>
                 </div>
               </div>
-              {% endif %}
-            {% endfor %}
             </div>
+            {% endif %}
+            {% endfor %}
           </div>
-          
-				</div>
-			</div>
+        </div>
+      </div>
     </div>
-	</section>
+  </section>
 </main>
-  
+
 {% endblock %}
