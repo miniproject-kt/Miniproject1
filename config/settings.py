@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'main',
     'postapp',
     'member',
+    'rest_framework', # 이메일
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,6 +143,15 @@ STATICFILES_DIRS = [
 ]
 
 
+EMAIL_HOST = 'smtp.gmail.com' # 메일 호스트 서버
+EMAIL_POST = '587'# 서버 포트
+EMAIL_HOST_USER = 'tmdgml199@gmail.com'# 사용할 Gmail
+EMAIL_HOST_PASSWORD = 'aivle202101'# 사용할 Gmail pw
+EMAIL_USE_TLS = True# TLS 보안 설정
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 응답 메일 관련 설정
+
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True # 유저가 받은 링크를 클릭하면 회원가입 완료되게끔
+ACCOUNT_EMAIL_REQUIRED = True
 
 
 
