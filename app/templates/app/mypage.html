@@ -15,7 +15,18 @@
           </nav>
           <h1 align = "left">내 포스팅</h1>
           <hr class="solid">
-          
+          {% for post in lender %}
+          <h2>{{request.session.user_index}}</h2>
+          <h2>{{post.l_posting_index}}</h2>
+          <h2>{{post.lender_index}}</h2>
+          <h2>{{post.title}}</h2>
+          <h2>{{post.category}}</h2>
+          <h2>{{post.body}}</h2>
+          <h2>{{post.deposit}}</h2>
+          <h2>{{post.body}}</h2>
+          <h2>{{post.date}}</h2>
+          {% endfor %}
+
           <div class="row">
             {% for post in lender %}
                 <div class="col-md-6 col-lg-4 col-xl-3">

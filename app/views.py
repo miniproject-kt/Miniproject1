@@ -13,8 +13,8 @@ from .models import Borrower, Lender, User
 
 def mypage(request):
         
-    borrower = Borrower.objects.order_by('-b_posting_index')[:4]
-    lender = Lender.objects.order_by('-l_posting_index')[:4]
+    borrower = Borrower.objects.order_by('-b_posting_index')
+    lender = Lender.objects.order_by('-l_posting_index')
     context = {
       'borrower': borrower,
       'lender': lender
