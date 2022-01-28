@@ -9,6 +9,8 @@ class User(models.Model):
     addr = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=50, null=False)
     register_date = models.DateTimeField(auto_now_add=True) # 등록 날짜
+    is_activate = models.IntegerField(default=0) # 이메일 활성화 여부
+    
     class Meta:
         db_table = 'User'
         managed = False

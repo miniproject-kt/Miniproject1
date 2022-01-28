@@ -27,6 +27,20 @@ def register(request):
                             username=username, email = email,  addr = addr)
             m.register_date = timezone.now()
             m.save()
+
+            # 이메일 인증 추가
+            current_site = get_current_site(request) 
+            message = render_to_string('member/act_email.html', {
+                'user': m,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(m.pk)),
+                'token': account_activation_token.make_token(m),
+            })
+            mail_title = "쉐어띵즈 계정 활성화 확인 이메일"
+            mail_to = request.POST["email"]
+            email = EmailMessage(mail_title, message, to=[mail_to])
+            email.send()
+
             return HttpResponseRedirect('/main/') # 회원가입 성공 후, 메인 페이지로 이동
     
     return render(request, 'member/register.html')
@@ -54,6 +68,9 @@ def login(request):
         corr_pw = User.objects.get(user_id=user_id).pw # 암호화 된 pw
 
         m = User.objects.get(user_id=user_id, pw=corr_pw)
+
+        if m.is_activate == 0:
+            return render(request, 'member/login.html')
 
         request.session['user_id'] = m.user_id
         request.session['username'] = m.username
@@ -240,3 +257,32 @@ def del_myinfo(request):
         return HttpResponse('Error2')
         
     return JsonResponse(data)
+
+
+
+from django.contrib import auth
+
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_text
+from .tokens import account_activation_token
+
+# 계정 활성화 함수(토큰을 통해 인증)
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+
+    except(TypeError, ValueError, OverflowError, User.DoesNotExsit):
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_activate = 1
+        user.save()
+        return redirect("member:login")
+
+    else:
+        return render(request, 'member/login.html', {'error' : '계정 활성화 오류'})
