@@ -145,8 +145,8 @@ STATICFILES_DIRS = [
 
 EMAIL_HOST = 'smtp.gmail.com' # 메일 호스트 서버
 EMAIL_POST = '587'# 서버 포트
-EMAIL_HOST_USER = 'tmdgml199@gmail.com'# 사용할 Gmail
-EMAIL_HOST_PASSWORD = 'aivle202101'# 사용할 Gmail pw
+EMAIL_HOST_USER = ''# 사용할 Gmail
+EMAIL_HOST_PASSWORD = ''# 사용할 Gmail pw
 EMAIL_USE_TLS = True# TLS 보안 설정
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER	 # 응답 메일 관련 설정
 
