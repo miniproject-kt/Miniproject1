@@ -3,19 +3,27 @@
 {% load humanize%}
 
 <main class="site-main">
-	<section class="" id="contact">
+	<section class="blog-banner-area" id="contact">
 		<div class="container h-100" >
 			<div class="blog-banner">
 				<div class="text-center" >
           <div>
 					<h1>My Page</h1>
 					<nav >
-            <ul style="text-align:left;">
-              <li><h3>ID: {{request.session.user_id}}</h3></li>
-              <li><h3>Name: {{request.session.username}}</h3></li>
+            <ul>
+              <li>ID: {{request.session.user_id}}</li>
+              <li>Name: {{request.session.username}}</li>
             </ul>
           </nav>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="" id="contact">
+    <div class="container h-100">
+      <div class="blog-banner">
+        <div class="text-center">
           <div class="section-intro pb-100px">
             <h2><span class="section-intro__style">내 포스팅</span></h2>
           </div>
