@@ -1,6 +1,14 @@
 {% extends 'main/base.html' %}
 {% block content %}
 {% load humanize%}
+<style>
+  .card-img2 {
+     width: 275px;
+     height: 275px;
+     object-fit: cover;
+     border-radius:calc(1rem - 1px);
+  }
+</style>
 
 <main class="site-main">
 	<section class="blog-banner-area" id="contact">
@@ -36,15 +44,15 @@
                 <div class="card-product__img">
                   <a href="/postapp/post/{{post.l_posting_index}}/">
                     {% if post.pic %}
-                    <img class="card-img" src="/media/{{ post.pic }}" alt=""
+                    <img class="card-img2" src="/media/{{ post.pic }}" alt=""
                       onerror="this.src = '/static/img/object/0.png'" width="200" height="200">
                     {% else %}
-                    <img class="card-img" src="/static/img/object/0.png" alt="">
+                    <img class="card-img2" src="/static/img/object/0.png" alt="">
                     {% endif %}
                   </a>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-product__title"><a href="/postapp/post/{{post.l_posting_index}}/">{{ post.title }}</a>
+                  <h4 style="color: black">{{ post.title }}</h4>
                   </h4>
                   <p class="card-product__price">{{ post.deposit|intcomma}}원</p>
                   <p>{{ post.user.username }}</p>
