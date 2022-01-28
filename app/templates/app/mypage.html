@@ -13,31 +13,35 @@
               <li>이름: {{request.session.username}}</li>
             </ul>
           </nav>
-          <h1 align = "left">내 포스팅</h1>
+
+          <div class="section-intro pb-100px">
+            <h2><span class="section-intro__style">내 포스팅</span></h2>
+         </div>
           <hr class="solid">
-          
           <div class="row">
             {% for post in lender %}
-                <div class="col-md-6 col-lg-4 col-xl-3">
-                  <div class="card text-center card-product">
-                      <div class="card-product__img">
-                        <a href="/board/{{post.l_posting_index}}/">
-                        {% if post.pic %}
-                            <img class="card-img2" src="{{post.pic}}" alt="" onerror="this.src = '/static/img/object/0.png'">
-                        {% else %}
-                            <img class="card-img2" src="/static/img/object/0.png" alt="">
-                        {% endif %}
-                        </a>
-                      </div>
-                      <div class="card-body">
-                        <h4 class="card-product__title"><a href="/board/{{post.l_posting_index}}/">{{ post.title }}</a>
-                        </h4>
-                        <p class="card-product__price">{{ post.deposit}}원</p>
-                        <p>{{ post.user.username }}</p>
-                      </div>
-                  </div>
+              {% if request.session.user_index == post.lender_index.user_index%}
+              <div class="col-md-6 col-lg-4 col-xl-3">
+                <div class="card text-center card-product">
+                    <div class="card-product__img">
+                      <a href="/postapp/post/{{post.l_posting_index}}/">
+                      {% if post.pic %}
+                        <img class="card-img2" src="/media/{{ post.pic }}" alt="" onerror="this.src = '/static/img/object/0.png'" width="200" height="200">
+                      {% else %}
+                          <img class="card-img2" src="/static/img/object/0.png" alt="">
+                      {% endif %}
+                      </a>
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-product__title"><a href="/postapp/post/{{post.l_posting_index}}/">{{ post.title }}</a>
+                      </h4>
+                      <p class="card-product__price">{{ post.deposit}}원</p>
+                      <p>{{ post.user.username }}</p>
+                    </div>
                 </div>
-              {% endfor %}
+              </div>
+              {% endif %}
+            {% endfor %}
             </div>
           </div>
           

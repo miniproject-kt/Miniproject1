@@ -10,6 +10,7 @@ class User(models.Model):
     addr = models.CharField(max_length=100, null=True)
     email = models.EmailField(max_length=50, null=False)
     register_date = models.DateTimeField(auto_now_add=True) # 등록 날짜
+    is_activate = models.IntegerField(default=0) 
     class Meta:
         db_table = 'User'
         managed = False
@@ -42,7 +43,7 @@ class Borrower_Chatting(models.Model):
     b_chatting_index = models.AutoField(primary_key=True)
     posting_index = models.ForeignKey('Borrower', on_delete = models.CASCADE, db_column="b_posting_index")
     borrower_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
-    user_index = models.IntegerField()
+    user_index = models.CharField(max_length=255,null=True)
     object_num = models.IntegerField() 
     date = models.DateTimeField(auto_now_add=True)
     chatting =  models.TextField(null=True)
@@ -54,7 +55,7 @@ class Lender_Chatting(models.Model):
     l_chatting_index = models.AutoField(primary_key=True)
     posting_index = models.ForeignKey('Lender', on_delete = models.CASCADE, db_column="l_posting_index")
     lender_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
-    user_index = models.IntegerField()
+    user_index = models.CharField(max_length=255,null=True)
     object_num = models.IntegerField() 
     date = models.DateTimeField(auto_now_add=True)
     chatting =  models.TextField(null=True)
