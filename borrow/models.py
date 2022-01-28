@@ -64,3 +64,28 @@ class Lender(models.Model):
     class Meta:
         db_table = 'Lender_Post'
         managed = False
+
+
+class Borrower(models.Model):
+    b_posting_index =  models.AutoField(primary_key=True)
+    borrower_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")
+    title = models.CharField(max_length=255,null=True)
+    category =  models.CharField(max_length=255,null=True)
+    body = models.TextField(null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        db_table = 'Borrower_Post'
+        managed = False
+
+
+class Borrower_Chatting(models.Model):
+    b_chatting_index = models.AutoField(primary_key=True)
+    posting_index = models.ForeignKey('Borrower', on_delete = models.CASCADE, db_column="b_posting_index")
+    borrower_index = models.ForeignKey('user', on_delete = models.CASCADE, db_column="user_id")	
+    user_index = models.IntegerField()
+    object_num = models.IntegerField() 
+    date = models.DateTimeField(auto_now_add=True)
+    chatting =  models.TextField(null=True)
+    class Meta:
+        db_table = 'Borrower_Chatting'
+        managed = False

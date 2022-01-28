@@ -2,7 +2,6 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.index),
-    path('map/', views.getMap),
-    path('posting/', views.getPosting)
+    path('category/', views.category, name = 'category'),
+    path('map/', views.getMap)
 ]
