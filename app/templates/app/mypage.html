@@ -3,17 +3,18 @@
 
 <main class="site-main">
 	<section class="" id="contact">
-		<div class="container h-100">
+		<div class="container h-100" >
 			<div class="blog-banner">
-				<div class="text-center">
+				<div class="text-center" >
+          <div>
 					<h1>My Page</h1>
 					<nav >
-            <ul >
-              <li>아이디: {{request.session.user_id}}</li>
-              <li>이름: {{request.session.username}}</li>
+            <ul style="text-align:left;">
+              <li><h3>ID: {{request.session.user_id}}</h3></li>
+              <li><h3>Name: {{request.session.username}}</h3></li>
             </ul>
           </nav>
-
+        </div>
           <div class="section-intro pb-100px">
             <h2><span class="section-intro__style">내 포스팅</span></h2>
          </div>
