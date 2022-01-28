@@ -1,6 +1,6 @@
 {% extends 'main/base.html' %}
 {% block content %}
-<section class="blog-banner-area" id="contact">
+<section class="blog-banner-area" id="contact" style="margin-bottom:-1%">
   <div class="container h-100">
     <div class="blog-banner">
       <div class="text-center">
@@ -25,33 +25,10 @@
   <div class="container">
     <div class="d-none d-sm-block mb-5 pb-4">
       <div id="map" style="height: 420px;"></div>
-      <script>
-        function initMap() {
-          var uluru = { lat: -25.363, lng: 131.044 };
-          var grayStyles = [
-            {
-              featureType: "all",
-              stylers: [
-                { saturation: -90 },
-                { lightness: 50 }
-              ]
-            },
-            { elementType: 'labels.text.fill', stylers: [{ color: '#A3A3A3' }] }
-          ];
-          var map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: -31.197, lng: 150.744 },
-            zoom: 9,
-            styles: grayStyles,
-            scrollwheel: false
-          });
-        }
-      </script>
-
-
       <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=56cf2129d5728bdc9a601f3775753eb6&libraries=services"></script>
-
-      <script>
+      
+        <script>
         navigator.geolocation.getCurrentPosition(success, fail)     // 웹브라우저가 geolocation을 지원하는 경우
 
         function success(location) {
