@@ -74,6 +74,7 @@ def login(request):
 
         request.session['user_id'] = m.user_id
         request.session['username'] = m.username
+        request.session['user_index'] = m.user_index
 
         return HttpResponseRedirect('/main/')
         
@@ -107,6 +108,7 @@ def valid_login(request):
 def logout(request):
     del request.session['user_id'] # 개별 삭제
     del request.session['username'] # 개별 삭제
+    del request.session['user_index']
     request.session.flush() # 전체 삭제
 
     return HttpResponseRedirect('/main/')
